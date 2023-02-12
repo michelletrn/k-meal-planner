@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import filters from "../extras/Filters";
 import {Dropdown, Col, Row, Container, Form, FormControl, Button} from 'react-bootstrap';
 import "./SearchBar.css";

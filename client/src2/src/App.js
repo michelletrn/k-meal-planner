@@ -6,6 +6,8 @@ import {
   NavBar, Home, Footer, Profile, Extras, Login, Logout
 } from "./components";
 
+import Recipe from "./extras/Recipe";
+
 function App() {
   const [currentPage, setCurrentPage] = useState("Home");
   return (
