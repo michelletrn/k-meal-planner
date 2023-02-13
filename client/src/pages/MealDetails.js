@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchRecipes } from '../utils/API';
+import Auth from '../utils/auth';
+import { saveMealIds, getSavedMealIds } from '../utils/localStorage';
+import { Button } from 'react-bootstrap';
+
+import { useMutation } from '@apollo/client';
+import { SAVE_MEAL } from '../utils/mutations';
 
 const MealDetails = () => {
     const { idMeal } = useParams();
     const [mealDetails, setMealDetails] = useState([]);
     const [count, setCount] = useState(1);
+    const [saveMeal, {error}] = useMutation(SAVE_MEAL);
+
+    // create state to hold saved mealId values
+    const [savedMealIds, setSavedMealIds] = useState(getSavedMealIds());
 
     const getMealDetails = async (query) => {
         try {
@@ -20,8 +30,26 @@ const MealDetails = () => {
         }
     };
 
+    const handleSaveMeal = async (idMeal) => {
+
+        const mealToSave = mealDetails.find((meal) => meal.idMeal === idMeal);
+
+        try {
+            const { data } = await saveMeal({
+                variables: { mealData: mealToSave },
+            });
+
+            if (data) {
+                setSavedMealIds([...savedMealIds, mealToSave.idMeal]);
+            }
+        } catch (err) {
+            console.error(JSON.parse(JSON.stringify(err)));
+        }
+    };
+
     useEffect(() => {
         getMealDetails(`lookup.php?i=${idMeal}`);
+        return () => saveMealIds(savedMealIds);
     }, []);
 
     return (
@@ -61,8 +89,20 @@ const MealDetails = () => {
                             return null;
                         })}
                     </ul>
+                    {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveMeal(meal.idMeal)}>
+                      {savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)
+                        ? 'This meal has already been saved!'
+                        : 'Save this Meal!'}
+                    </Button>
+                   )}
                 </div>
             ))}
+            
+
         </div>
     );
 };

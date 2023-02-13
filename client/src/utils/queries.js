@@ -49,10 +49,10 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      thoughts {
+      posts {
         _id
-        thoughtText
-        thoughtAuthor
+        postText
+        postAuthor
         createdAt
       }
     }
