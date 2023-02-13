@@ -54,3 +54,19 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const SAVE_MEAL = gql`
+    mutation saveMeal($mealData: MealInput!){
+        saveMeal(mealData: $mealData){
+            _id
+            username
+            email            
+            savedMeals {
+                idMeal
+                strMeal
+                strMealThumb  
+            }
+
+        }
+    }
+`;
