@@ -48,38 +48,20 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
-          
-          <div className="container">
+          <SearchForm />
+          <div className="container-fluid">
             <Routes>
-              <Route 
+              <Route
                 path="/"
-                // element={<Home />}
-                element={<SearchForm />}
+                element={<Home />}
+                // element={<SearchForm />}
               />
-              <Route 
-                path="/login" 
-                element={<Login />}
-              />
-              <Route 
-                path="/signup" 
-                element={<Signup />}
-              />
-              <Route 
-                path="/me" 
-                element={<Profile />}
-              />
-              <Route 
-                path="/profiles/:username" 
-                element={<Profile />}
-              />
-              <Route 
-                path="/thoughts/:thoughtId" 
-                element={<SingleThought />}
-              />
-              <Route 
-                path="/recipe/:idMeal" 
-                element={<MealDetails />}
-              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/me" element={<Profile />} />
+              <Route path="/profiles/:username" element={<Profile />} />
+              <Route path="/thoughts/:thoughtId" element={<SingleThought />} />
+              <Route path="/recipe/:idMeal" element={<MealDetails />} />
             </Routes>
           </div>
           <Footer />
