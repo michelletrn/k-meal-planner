@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { searchRecipes } from '../../utils/API';
 import SearchResult from '../SearchResult';
 
+import './searchForm.css'
+
 const SearchForm = () => {
 
     const [categoryList, setCategoryList] = useState([]);
@@ -89,7 +91,7 @@ const SearchForm = () => {
     }, []);
 
     return (
-        <div>
+        <div className='search-container'>
             <div>
                 <span> Search by Category: </span>
                 <select name="category" onChange={handleSelectChange}>
