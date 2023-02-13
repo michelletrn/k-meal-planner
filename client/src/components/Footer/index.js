@@ -1,35 +1,42 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Nav, Navbar, Col, Row } from "react-bootstrap";
+
+import "./footer.css";
 
 const Footer = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
-      <div className="container text-center mb-5">
-        {location.pathname !== '/' && (
-          <button
-            className="btn btn-dark mb-3"
-            onClick={() => navigate(-1)}
-          >
-            &larr; Go Back
-          </button>
-        )}
-        <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the Tech Thoughts team.
-        </h4>
-      </div>
-    </footer>
+    <>
+      <Col className="footer-container">
+        <p class="footerText">Made By</p>
+        <Navbar className="justify-content-center footerText">
+          <Nav>
+            <Nav.Item>
+              <Nav.Link target="_blank" href="https://github.com/michelletrn/">
+                Michelle
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link target="_blank" href="https://github.com/peterlim995">
+                Peter
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link target="_blank" href="https://github.com/inputName-jy">
+                Justin
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link target="_blank" href="https://github.com/ThomasJay44">
+                Thomas
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Navbar>
+      </Col>
+    </>
   );
 };
 
 export default Footer;
+
