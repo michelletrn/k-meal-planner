@@ -13,9 +13,9 @@ const Main = () => {
           <h2>Find New Recipes to Try!</h2>
           <p>Gain access to delicious recipes and join now!</p>
           <img src="https://via.placeholder.com/200 " alt="palceholder" />
-          <Link to="/search">
-            <button id="get-started-btn">Get Started</button>
-          </Link>
+          <button id="get-started-btn">
+            <Link to="/search">Get Started</Link>
+          </button>
         </Col>
       </Row>
       <Col className="home-description">

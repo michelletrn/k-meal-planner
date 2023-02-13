@@ -29,6 +29,11 @@
     background-color: #ffb198;
     opacity: 80%;
 }
+#get-started-btn a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}
 #get-started-btn:hover {
     opacity: 100%;
     transition: 1s ease;
