@@ -10,6 +10,7 @@ header {
     margin: 0 3%;
     min-height: 75px;
     max-height: 120px;
+    padding-top: 10px;
     justify-content: space-between;
 }
 

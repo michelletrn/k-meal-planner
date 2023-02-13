@@ -5,6 +5,8 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
+
+// import Auth from "../../utils/auth";
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -14,9 +16,9 @@ import Login from './pages/Login';
 import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
-import SearchForm from './components/SearchForm';
 import Footer from './components/Footer';
 import MealDetails from './pages/MealDetails';
+import SearchForm from './pages/SearchForm';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -48,16 +50,13 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
-          <SearchForm />
+          {/* <SearchForm /> */}
           <div className="container-fluid">
             <Routes>
-              <Route
-                path="/"
-                element={<Home />}
-                // element={<SearchForm />}
-              />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/search" element={<SearchForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/thoughts/:thoughtId" element={<SingleThought />} />

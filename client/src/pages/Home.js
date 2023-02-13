@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 // import RecipeSearch from "../extras/RecipeSearch";
 import "./home.css";
 
@@ -12,7 +13,9 @@ const Main = () => {
           <h2>Find New Recipes to Try!</h2>
           <p>Gain access to delicious recipes and join now!</p>
           <img src="https://via.placeholder.com/200 " alt="palceholder" />
-          <button id="get-started-btn">Get Started</button>
+          <Link to="/search">
+            <button id="get-started-btn">Get Started</button>
+          </Link>
         </Col>
       </Row>
       <Col className="home-description">
