@@ -19,23 +19,13 @@ const userSchema = new Schema({
       unique: true,
       trim: true,
     },
-  // firstName: {
-  //     type: String,
-  //     required: true,
-  //     minlength: 1
-  // },
-  // lastName: {
-  //     type: String,
-  //     required: true,
-  //     minlength: 1
-  // },
   posts: [
       {
           type: Schema.Types.ObjectId,
           ref: 'Post'
       }
   ],
-  recipes: [
+  savedRecipes: [
       {
           type: Schema.Types.ObjectId,
           ref: 'Recipe'

@@ -5,8 +5,6 @@ const typeDefs = gql`
         _id: ID!
         username: String!
         email: String!
-        firstName: String!
-        lastName: String!
         posts: [Post]
         savedRecipes: [Recipe]
     }
@@ -33,7 +31,7 @@ const typeDefs = gql`
     }
 
     type Recipe {
-        idMeal: Int!
+        idMeal: String!
         strMeal: String!
         strCategory: String!
         strArea: String!
@@ -85,12 +83,11 @@ const typeDefs = gql`
 
     type Query {
         me: User
-        users: [User]
-        user(username: String!): User
         posts(username: String): [Post]
-        post(_id: ID!): Post
+        post(postId: ID!): Post
         comments(postId: ID!): [Comment]
-        recipe(_id: ID!): Recipe
+        users: [User]
+
     }
 
     type Mutation {

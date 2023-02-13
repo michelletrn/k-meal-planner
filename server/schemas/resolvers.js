@@ -6,9 +6,23 @@ const resolvers = {
   Query: {
       me: async (parent, args, context) => {
           if (context.user) {
-              return User.findOne({ _id: context.user._id }).populate('posts');
+              return User.findOne({ _id: context.user._id }).populate('posts').populate('savedRecipes');
           }
           throw new AuthenticationError('You need to be logged in!');
+      },
+      posts: async (parent, {username}) => {
+        const params = username ? {username} : {};
+        return Post.find(params).sort({createdAt: -1});
+      },
+      post: async (parent, {postId}) => {
+        return Post.findOne({_id: postId}).populate('comments');
+      },
+      comments: async (parent, {postId}) => {
+        const params = postId ? {postId} : {};
+        return Comment.find(params).sort({createdAt: -1});
+      },
+      users: async () => {
+        return User.find().populate('posts').populate('savedRecipes');
       },
   },
   Mutation: {
