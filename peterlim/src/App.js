@@ -14,9 +14,7 @@ import Login from './pages/Login';
 import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Header from './components/Header';
-import SearchForm from './components/SearchForm';
 import Footer from './components/Footer';
-import MealDetails from './pages/MealDetails';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -48,13 +46,11 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
-          
           <div className="container">
             <Routes>
               <Route 
                 path="/"
-                // element={<Home />}
-                element={<SearchForm />}
+                element={<Home />}
               />
               <Route 
                 path="/login" 
@@ -75,10 +71,6 @@ function App() {
               <Route 
                 path="/thoughts/:thoughtId" 
                 element={<SingleThought />}
-              />
-              <Route 
-                path="/recipe/:idMeal" 
-                element={<MealDetails />}
               />
             </Routes>
           </div>
