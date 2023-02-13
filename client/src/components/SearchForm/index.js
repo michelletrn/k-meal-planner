@@ -10,7 +10,9 @@ const SearchForm = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedArea, setSelectedArea] = useState('');    
     const [searchIngredient, setSearchIngredient] = useState('');
+    const [searchMealName, setSearchMealName] = useState('');
     const [selectedIngredient, setSelectedIngredient] = useState('');
+    const [selectedMealName, setSelectedMealName] = useState('');
 
 
 
@@ -26,17 +28,30 @@ const SearchForm = () => {
         } else if (event.target.name === 'ingredient') {
             setSearchIngredient(event.target.value);    
             // console.log(searchIngredient);        
+        } else if (event.target.name === 'mealName') {
+            setSearchMealName(event.target.value);                
+            // console.log(searchMealName);
         }
     };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
 
+        console.log("Event: ", event.target.name);
         // if (!selectedCategory && !selectedArea) {
         //     return false;
         // }
+        if (event.target.name === 'ingredient') {
+            setSelectedIngredient(searchIngredient);
+            setSelectedMealName('');    
+            // console.log(searchIngredient);        
+        } else if (event.target.name === 'mealName') {
+            setSelectedMealName(searchMealName);    
+            setSelectedIngredient('');
+            // console.log("selectedMealName",selectedMealName);
+        }  
 
-        setSelectedIngredient(searchIngredient);
+        
         // console.log("selectedIngredient: ",selectedIngredient);        
         setSelectedCategory('');
         setSelectedArea('');        
@@ -96,11 +111,20 @@ const SearchForm = () => {
                 </select>
                 <span> Search by Ingredient </span>                
                     <input type="text" name="ingredient" onChange={handleSelectChange} />
-                    <button type="submit" onClick={handleFormSubmit}>Search</button>
+                    <button type="submit" name="ingredient" onClick={handleFormSubmit}>Search</button>
+
+                    <span> Search by Meal Name </span>                
+                    <input type="text" name="mealName" onChange={handleSelectChange} />
+                    <button type="submit" name="mealName" onClick={handleFormSubmit}>Search</button>
                 
             </div>
             <div>
-                <SearchResult category={selectedCategory} area={selectedArea} ingredient={selectedIngredient}/>
+                <SearchResult 
+                    category={selectedCategory} 
+                    area={selectedArea} 
+                    ingredient={selectedIngredient} 
+                    mealName={selectedMealName}                
+                />
             </div>
         </div>
     );

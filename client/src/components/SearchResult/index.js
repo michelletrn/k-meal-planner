@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { searchRecipes } from '../../utils/API';
 import { Link } from 'react-router-dom';
 
-const SearchResult = ({category, area, ingredient}) => {
+const SearchResult = ({category, area, ingredient, mealName}) => {
 
     const [recipeList, setRecipeList] = useState([]);
 
@@ -30,7 +30,7 @@ const SearchResult = ({category, area, ingredient}) => {
         };
 
         // getRecipe(`filter.php?c=${category}&a=${area}`);
-        if(category === '' && area === '' && ingredient === '') {
+        if(category === '' && area === '' && ingredient === '' && mealName === '') {
             // getRecipe(`filter.php?a=Canadian`);
         } else if (area !== '') {
             getRecipe(`filter.php?a=${area}`);
@@ -38,9 +38,11 @@ const SearchResult = ({category, area, ingredient}) => {
             getRecipe(`filter.php?c=${category}`);
         } else if (ingredient !== '') {
             getRecipe(`filter.php?i=${ingredient}`);
+        } else if (mealName !== '') {
+            getRecipe(`search.php?s=${mealName}`);
         }
 
-    }, [category, area, ingredient]);
+    }, [category, area, ingredient, mealName]);
 
     return (
         <div>
