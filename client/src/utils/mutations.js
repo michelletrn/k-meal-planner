@@ -56,12 +56,28 @@ export const ADD_COMMENT = gql`
 `;
 
 export const SAVE_MEAL = gql`
-    mutation saveMeal($mealData: MealInput!){
-        saveMeal(mealData: $mealData){
+    mutation saveRecipe($mealData: RecipeInput!){
+      saveRecipe(mealData: $mealData){
             _id
             username
             email            
-            savedMeals {
+            savedRecipes {
+                idMeal
+                strMeal
+                strMealThumb  
+            }
+
+        }
+    }
+`;
+
+export const REMOVE_MEAL = gql`
+    mutation removeRecipe($idMeal: String!){
+      removeRecipe(idMeal: $idMeal){
+            _id
+            username
+            email            
+            savedRecipes {
                 idMeal
                 strMeal
                 strMealThumb  

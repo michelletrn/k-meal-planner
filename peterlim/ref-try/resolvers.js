@@ -117,16 +117,43 @@ const resolvers = {
       saveRecipe: async (parent, { mealData }, context) => {
           console.log("mealData:",mealData);
           if (context.user) {
+
+              const { idMeal, strMeal, strCategory, strArea, strInstructions, strMealThumb, strTags, strYoutube, strIngredients, strMeasures} = mealData;
+
+              try {
+              const recipe = await Recipe.create({
+                  idMeal,
+                  strMeal,
+                  strCategory,
+                  strArea,
+                  strInstructions,
+                  strMealThumb,
+                  strTags,
+                  strYoutube,
+                  strIngredients,
+                  strMeasures
+              });
+
+              console.log("recipe:",recipe);
+
               return await User.findOneAndUpdate(
                   { _id: context.user._id },
-                  { $addToSet: { savedRecipes: {...mealData } } },
+                  { $addToSet: { savedRecipes: recipe._id } },
                   { new: true,}
               );
+
+            } catch (err) {
+              console.log(err);
+              return err;
+            }
           }
           throw new AuthenticationError('You need to be logged in!');
       },
       removeRecipe: async (parent, { idMeal }, context) => {
           if (context.user) {
+
+              const recipe = await Recipe.findOneAndDelete({
+
               return await User.findOneAndUpdate(
                   { _id: context.user._id },
                   { $pull: { savedRecipes: { idMeal } } },

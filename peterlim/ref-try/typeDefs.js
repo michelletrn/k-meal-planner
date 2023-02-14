@@ -32,7 +32,7 @@ const typeDefs = gql`
 
     type Recipe {
         _id: ID!
-        idMeal: String!
+        idMeal: String
         strMeal: String
         strCategory: String
         strArea: String
@@ -45,7 +45,7 @@ const typeDefs = gql`
     }
 
     input RecipeInput {
-      idMeal: String!
+      idMeal: String
       strMeal: String
       strCategory: String
       strArea: String

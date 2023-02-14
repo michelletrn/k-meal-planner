@@ -5,9 +5,11 @@ import { Container, Nav, Navbar, Col, Row } from "react-bootstrap";
 import "./footer.css";
 
 const Footer = () => {
+
   return (
     <>
       <Col className="footer-container">
+        
         <p class="footerText">Made By</p>
         <Navbar className="justify-content-center footerText">
           <Nav>
