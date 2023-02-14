@@ -14,7 +14,7 @@ const Main = () => {
           <p>Gain access to delicious recipes and join now!</p>
           <img src="https://via.placeholder.com/200 " alt="palceholder" />
           <button id="get-started-btn">
-            <Link to="/search">Get Started</Link>
+            <Link to="/search">Find a Recipe</Link>
           </button>
         </Col>
       </Row>

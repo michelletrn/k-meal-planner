@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import {Col, Row} from "react-bootstrap";
+
+
 import { searchRecipes } from "../utils/API";
 import SearchResult from "../components/SearchResult";
 
@@ -82,36 +86,64 @@ const SearchForm = () => {
   }, []);
 
   return (
-    <div className="search-container">
-      <div>
-        <span> Search by Category: </span>
-        <select name="category" onChange={handleSelectChange}>
-          <option value="">Select Category</option>
-          {categoryList.map((category) => (
-            <option key={category.strCategory} value={category.strCategory}>
-              {category.strCategory}
-            </option>
-          ))}
-        </select>{" "}
-        <span> Search by Area: </span>
-        <select name="area" onChange={handleSelectChange}>
-          <option value="">Select Area</option>
-          {areaList.map((area) => (
-            <option key={area.strArea} value={area.strArea}>
-              {area.strArea}
-            </option>
-          ))}
-        </select>
-        <span> Search by Ingredient </span>
-        <input type="text" name="ingredient" onChange={handleSelectChange} />
-        <button type="submit" name="ingredient" onClick={handleFormSubmit}>
-          Search
-        </button>
-        <span> Search by Meal Name </span>
-        <input type="text" name="mealName" onChange={handleSelectChange} />
-        <button type="submit" name="mealName" onClick={handleFormSubmit}>
-          Search
-        </button>
+    <div className="container-fluid">
+      <div className="search-container">
+        <div>
+          <input
+            className="searchbar"
+            type="text"
+            name="mealName"
+            placeholder="Search Recipe"
+            onChange={handleSelectChange}
+          />
+          <button
+            className="searchbar-btn"
+            type="submit"
+            name="mealName"
+            onClick={handleFormSubmit}
+          >
+            Search
+          </button>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="ingredient"
+            className="searchbar"
+            placeholder="Search Ingredient"
+            onChange={handleSelectChange}
+          />
+          <button
+            type="submit"
+            className="searchbar-btn"
+            name="ingredient"
+            onClick={handleFormSubmit}
+          >
+            Search
+          </button>
+        </div>
+        <div className="filters">
+          <select
+            name="category"
+            className="filter"
+            onChange={handleSelectChange}
+          >
+            <option value="">Category</option>
+            {categoryList.map((category) => (
+              <option key={category.strCategory} value={category.strCategory}>
+                {category.strCategory}
+              </option>
+            ))}
+          </select>{" "}
+          <select name="area" className="filter" onChange={handleSelectChange}>
+            <option value=""> Cuisine</option>
+            {areaList.map((area) => (
+              <option key={area.strArea} value={area.strArea}>
+                {area.strArea}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div>
         <SearchResult

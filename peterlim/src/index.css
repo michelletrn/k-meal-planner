@@ -1175,7 +1175,7 @@ label form [type='radio'] {
 }
 
 .container.container-fluid {
-  width: 92%;
+  width: 100%;
 }
 
 /* FLEX CONTENT */
