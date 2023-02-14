@@ -34,6 +34,7 @@ const SearchForm = () => {
     } else if (event.target.name === "mealName") {
       setSearchMealName(event.target.value);
       // console.log(searchMealName);
+       // console.log(searchMealName);
     }
   };
 

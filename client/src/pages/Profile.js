@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { REMOVE_MEAL } from '../utils/mutations';
 import * as Icon from "react-bootstrap-icons";
 import { Row, Col } from "react-bootstrap";
-import './Profile.css'
+import './Profile.css';
+import ShoppingList from "../components/ShoppingList";
 // import ThoughtForm from '../components/ThoughtForm';
 // import ThoughtList from '../components/ThoughtList';
 
@@ -13,10 +14,13 @@ import './Profile.css'
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { removeMealId } from '../utils/localStorage';
 
-import Auth from '../utils/auth';
+
+import Auth from "../utils/auth";
 
 const Profile = () => {
   const { username: userParam } = useParams();
+  const [shoppingList, setShoppingList] = useState([]);
+  // shopping list will look like this: ["celery", "onion", "carrot", "orange"]
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
@@ -27,26 +31,55 @@ const Profile = () => {
   const userData = data?.me || data?.user || {};
   // navigate to personal profile page if username is yours
 
-  const handleDeleteMeal = async (idMeal) => {
+  const getIngredients = (recipe) => {
+    const ingredients = [];
 
+    // for (let i = 1; i <= 20; i++) {
+    //   const ingredient = recipe["strIngredient" + i];
+    //   const measure = recipe["strMeasure" + i];
+    //   if (ingredient) {
+    //     ingredients.push(`${ingredient} - ${measure}`);
+    //   }
+    // }
+
+    ingredients.push(recipe.strIngredients);
+    console.log(ingredients);
+    return ingredients;
+  };
+
+  const handleAddToShoppingList = (ingredients) => {
+    console.log("ingredients: ", ingredients);
+    // const previousList = JSON.parse(localStorage.getItem("shoppingList")) || [];
+    // ingredients.foreach((ingredient) => {
+    //   previousList.push(ingredient);
+    // });
+    // // const newList = [...ingredients, ...previousList];
+    // const newList = [...previousList];
+
+    // console.log("newList: ", newList);
+
+    // setShoppingList(newList);
+    setShoppingList(ingredients);
+    // store the updated shopping list in local storage
+    // localStorage.setItem("shoppingList", JSON.stringify(newList));
+  };
+
+  const handleDeleteMeal = async (idMeal) => {
     try {
       const { data } = await removeMeal({
         variables: { idMeal },
       });
 
       if (!data) {
-        throw new Error('Something went wrong!');
+        throw new Error("Something went wrong!");
       }
 
       // upon success, remove meal's id from localStorage
       removeMealId(idMeal);
-      
     } catch (err) {
-      console.error(JSON.parse(JSON.stringify(err)));  
+      console.error(JSON.parse(JSON.stringify(err)));
     }
   };
-
-
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
@@ -98,11 +131,19 @@ const Profile = () => {
               </div>
 
               {/* add to cart btn will go here */}
-              
+              <button
+            // onClick={() => handleAddToShoppingList(getIngredients(recipe))}
+            onClick={() => handleAddToShoppingList(recipe.strIngredients)}>
+            Add to Shopping List
+          </button>
             </div>
           </Col>
         ))}
       </Row>
+      <ShoppingList
+        shoppingList={shoppingList}
+        setShoppingList={setShoppingList}
+      />
     </div>
   );
 };
