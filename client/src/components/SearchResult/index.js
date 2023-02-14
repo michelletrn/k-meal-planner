@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 
 import { searchRecipes } from '../../utils/API';
 import { Link } from 'react-router-dom';
-
+import './SearchResult.css'
+import { Col, Row } from "react-bootstrap";
 const SearchResult = ({category, area, ingredient, mealName}) => {
 
     const [recipeList, setRecipeList] = useState([]);
@@ -45,21 +46,25 @@ const SearchResult = ({category, area, ingredient, mealName}) => {
     }, [category, area, ingredient, mealName]);
 
     return (
-        <div>
-    
-            {recipeList.map((recipe) => (
-                <Link
-                    to={`/recipe/${recipe.idMeal}`}
-                    key={recipe.idMeal}
-                >
+      <div className="recipe-results-container">
+        <Row className="recipe-container">
+        <p id="search-req">Showing results for "{category}{area}{ingredient}{mealName}"</p>
+          {recipeList.map((recipe) => (
+            <Col className="recipe-card" lg={5}>
+              <Link to={`/recipe/${recipe.idMeal}`} key={recipe.idMeal}>
                 <div key={recipe.idMeal}>
-                    <h2>{recipe.strMeal}</h2>
-                    <img src={recipe.strMealThumb} alt={recipe.strMeal} />  
+                  <Row className="recipe-title">
+                    <h4>{recipe.strMeal}</h4>
+                  </Row>
+                  <Row>
+                    <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+                  </Row>
                 </div>
-                </Link>
-            ))}
-
-        </div>
+              </Link>
+            </Col>
+          ))}
+        </Row>
+      </div>
     );
 };
 

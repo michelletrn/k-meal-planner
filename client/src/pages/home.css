@@ -23,11 +23,17 @@
 }
 #get-started-btn {
     margin: 20px auto;
-    width: 120px;
+    width: 140px;
+    height: 30px;
     border: none;
     border-radius: 2px;
     background-color: #ffb198;
     opacity: 80%;
+}
+#get-started-btn a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
 }
 #get-started-btn:hover {
     opacity: 100%;
@@ -39,15 +45,14 @@
     column-gap: 1%;
 }
 .home-description {
+    margin: 0 25%;
     display: flex;
     flex-direction: column;
     text-align: center;
+    justify-content: center;
 }
 .home-description h3 {
     margin: 1%;
-}
-.description-item {
-    max-width: 300px;
 }
 .home-description img {
     max-width: 125px;
