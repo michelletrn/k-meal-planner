@@ -25,12 +25,12 @@ const postSchema = new Schema({
           ref: 'Comment',
       },
   ],
-  recipes: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: 'Recipe',
-      },
-  ]
+//   recipes: [
+//       {
+//           type: Schema.Types.ObjectId,
+//           ref: 'Recipe',
+//       },
+//   ]
 });
 
 const Post = model('Post', postSchema);

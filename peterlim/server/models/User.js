@@ -1,33 +1,30 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const recipeSchema = require('./Recipe');
-
 const userSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
   email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
+    type: String,
+    required: true,
+    unique: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   password: {
-      type: String,
-      required: true,
-      minlength: 4
+    type: String,
+    required: true,
+    minlength: 5,
   },
-  username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
+  thoughts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Thought',
     },
-  posts: [
-      {
-          type: Schema.Types.ObjectId,
-          ref: 'Post'
-      }
   ],
-  savedRecipes: [recipeSchema]
 });
 
 userSchema.pre('save', async function (next) {

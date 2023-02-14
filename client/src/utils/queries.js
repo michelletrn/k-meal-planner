@@ -49,11 +49,18 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      posts {
+      savedRecipes {
         _id
-        postText
-        postAuthor
-        createdAt
+        idMeal
+        strMeal
+        strCategory
+        strArea
+        strInstructions
+        strMealThumb
+        strTags
+        strYoutube
+        strIngredients
+        strMeasures
       }
     }
   }

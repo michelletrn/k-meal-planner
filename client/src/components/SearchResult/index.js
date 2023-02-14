@@ -29,9 +29,9 @@ const SearchResult = ({category, area, ingredient, mealName}) => {
             }
         };
 
-        // getRecipe(`filter.php?c=${category}&a=${area}`);
+        
         if(category === '' && area === '' && ingredient === '' && mealName === '') {
-            // getRecipe(`filter.php?a=Canadian`);
+            getRecipe(`randomselection.php`);
         } else if (area !== '') {
             getRecipe(`filter.php?a=${area}`);
         } else if (category !== '') {
