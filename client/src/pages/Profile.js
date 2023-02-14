@@ -3,9 +3,12 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { REMOVE_MEAL } from '../utils/mutations';
-
+import * as Icon from "react-bootstrap-icons";
+import { Row, Col } from "react-bootstrap";
+import './Profile.css'
 // import ThoughtForm from '../components/ThoughtForm';
 // import ThoughtList from '../components/ThoughtList';
+
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { removeMealId } from '../utils/localStorage';
@@ -63,27 +66,44 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <h2>
-        {userData.savedRecipes.length
-          ? `Viewing ${userData.savedRecipes.length} saved ${userData.savedRecipes.length === 1 ? 'recipe' : 'recipes'}:`
-          : 'You have no saved Recipes!'}
-      </h2>
-      {userData.savedRecipes.map((recipe) => (
-        <>
-        <Link
-          to={`/recipe/${recipe.idMeal}`}
-          key={recipe.idMeal}
-        >
-          <div key={recipe.idMeal}>
-            <h2>{recipe.strMeal}</h2>
-            <img src={recipe.strMealThumb} alt={recipe.strMeal} />
-          </div>
-        </Link>
-        <button onClick={() => handleDeleteMeal(recipe.idMeal)}>Delete This Recipe</button>
-        </>
-      ))}
-    </>
+    <div className="recipe-results-container">
+      <Row className="recipe-container">
+        <h4>
+          {userData.savedRecipes.length
+            ? `Viewing ${userData.savedRecipes.length} saved ${
+                userData.savedRecipes.length === 1 ? "recipe" : "recipes"
+              }:`
+            : "You have no saved Recipes!"}
+        </h4>
+        {userData.savedRecipes.map((recipe) => (
+          <Col className="recipe-card" lg={5}>
+            <Link to={`/recipe/${recipe.idMeal}`} key={recipe.idMeal}>
+              <div key={recipe.idMeal}>
+                <Row className="recipe-title">
+                  <h4>{recipe.strMeal}</h4>
+                </Row>
+                <Row>
+                  <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+                </Row>
+              </div>
+            </Link>
+            <div>
+              <div
+                className="unsave-btn"
+                onClick={() => handleDeleteMeal(recipe.idMeal)}
+              >
+                <Icon.Trash style={{ width: "25px", height: "25px" }}>
+                  Unsave Recipe
+                </Icon.Trash>
+              </div>
+
+              {/* add to cart btn will go here */}
+              
+            </div>
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 };
 
