@@ -1,19 +1,17 @@
 import React, { useState } from "react";
-import { Navigate, useParams } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
-import { REMOVE_MEAL } from '../utils/mutations';
+import { Navigate, useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { REMOVE_MEAL } from "../utils/mutations";
 import * as Icon from "react-bootstrap-icons";
 import { Row, Col } from "react-bootstrap";
-import './Profile.css';
+import "./Profile.css";
 import ShoppingList from "../components/ShoppingList";
 // import ThoughtForm from '../components/ThoughtForm';
 // import ThoughtList from '../components/ThoughtList';
 
-
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
-import { removeMealId } from '../utils/localStorage';
-
+import { QUERY_USER, QUERY_ME } from "../utils/queries";
+import { removeMealId } from "../utils/localStorage";
 
 import Auth from "../utils/auth";
 
@@ -48,20 +46,10 @@ const Profile = () => {
   };
 
   const handleAddToShoppingList = (ingredients) => {
-    console.log("ingredients: ", ingredients);
-    // const previousList = JSON.parse(localStorage.getItem("shoppingList")) || [];
-    // ingredients.foreach((ingredient) => {
-    //   previousList.push(ingredient);
-    // });
-    // // const newList = [...ingredients, ...previousList];
-    // const newList = [...previousList];
-
-    // console.log("newList: ", newList);
-
-    // setShoppingList(newList);
-    setShoppingList(ingredients);
-    // store the updated shopping list in local storage
-    // localStorage.setItem("shoppingList", JSON.stringify(newList));
+    setShoppingList((prevShoppingList) => [
+      ...prevShoppingList,
+      ...ingredients,
+    ]);
   };
 
   const handleDeleteMeal = async (idMeal) => {
@@ -132,10 +120,11 @@ const Profile = () => {
 
               {/* add to cart btn will go here */}
               <button
-            // onClick={() => handleAddToShoppingList(getIngredients(recipe))}
-            onClick={() => handleAddToShoppingList(recipe.strIngredients)}>
-            Add to Shopping List
-          </button>
+                // onClick={() => handleAddToShoppingList(getIngredients(recipe))}
+                onClick={() => handleAddToShoppingList(recipe.strIngredients)}
+              >
+                Add to Shopping List
+              </button>
             </div>
           </Col>
         ))}

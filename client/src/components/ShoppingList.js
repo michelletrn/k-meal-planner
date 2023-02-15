@@ -6,9 +6,7 @@ import { REMOVE_MEAL } from "../utils/mutations";
 import * as Icon from "react-bootstrap-icons";
 
 const ShoppingList = ({ shoppingList, setShoppingList }) => {
-  const uniqueIngredients = Array.from(new Set(shoppingList));
-  const filteredIngredients = uniqueIngredients.filter((ingredient) => ingredient != null);
-  const emailBody = filteredIngredients.join("%0D%0A");
+  const emailBody = shoppingList.join("%0D%0A");
 
   const handleDelete = (index) => {
     setShoppingList((prevList) =>
@@ -16,14 +14,24 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
     );
   };
 
+  const handleFilter = () => {
+    const filteredList = shoppingList.filter((item) => item !== null);
+    const uniqueList = [...new Set(filteredList)];
+    setShoppingList(uniqueList);
+  };
+
   return (
     <>
       <h2>Shopping List:</h2>
+      <button onClick={handleFilter}>Clean UP Shopping List</button>
+      <a href={`mailto:?subject=My Shopping List&body=${emailBody}`}>
+        <button>Send Shopping List via Email</button>
+      </a>
       {shoppingList.length === 0 ? (
         <p>Your shopping list is currently empty</p>
       ) : (
         <ul>
-          {filteredIngredients.map((ingredient, index) => (
+          {shoppingList.map((ingredient, index) => (
             <li key={index}>
               {ingredient}
               <div
@@ -38,9 +46,6 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
           ))}
         </ul>
       )}
-      <a href={`mailto:?subject=My Shopping List&body=${emailBody}`}>
-        <button>Send Shopping List via Email</button>
-      </a>
     </>
   );
 };
