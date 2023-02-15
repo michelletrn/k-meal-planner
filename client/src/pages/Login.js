@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
-import './Login.css'
+import './Login.css';
 import Auth from '../utils/auth';
 
 const Login = (props) => {
@@ -48,7 +48,7 @@ const Login = (props) => {
     >
       <div className="login-form">
         <div className="card" style={{ border: "none" }}>
-          <h4 className="card-header" style={{ backgroundColor: "#FFD7D7" }}>
+          <h4 className="card-header" style={{ backgroundColor: "#FFD2CC" }}>
             Login
           </h4>
           <div
@@ -59,7 +59,7 @@ const Login = (props) => {
               justifyContent: "center",
               margin: "0 auto",
               padding: "9px 25px 25px 25px",
-              backgroundColor: "#FFD7D7",
+              backgroundColor: "#FFD2CC",
             }}
           >
             {data ? (
@@ -74,6 +74,7 @@ const Login = (props) => {
                   textAlign: "center",
                   backgroundColor: "white",
                   padding: "4%",
+                  borderRadius: "4px",
                 }}
               >
                 <input

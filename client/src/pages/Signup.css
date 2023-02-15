@@ -1,20 +1,14 @@
-.login-form {
+.signup-form {
     display: flex;
     justify-content: center;
 }
-
-.login-form .card {
+.signup-form .card {
     margin: 7%;
 }
-
-.login-form h4{
+.signup-form h4{
     text-align: center;
 }
-.login-btn:hover {
-    opacity: 70%;
-    transition: 1s ease;
-}
-.login-input {
+.signup-input {
     width: 100%;
     margin-top: 1%;
     margin-bottom: 4%;
@@ -23,8 +17,12 @@
     border-radius: 5px;
     height: 30px;
 }
+.signup-btn:hover {
+    opacity: 70%;
+    transition: 1s ease;
+}
 
-.login-container .login-form .card .card-header,
-.login-container .login-form .card .card-body {
+.signup-container .signup-form .card .card-header,
+.signup-container .signup-form .card .card-body {
   border: none;
 }
