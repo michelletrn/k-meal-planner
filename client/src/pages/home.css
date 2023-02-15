@@ -14,11 +14,12 @@
 }
 .home-banner h2 {
     font-weight: 600;
+    font-size: 45px;
     color: rgb(85, 85, 85);
 }
 .home-banner img {
-    max-width: 200px;
-    border-radius: 100px;
+    max-width: 275px;
+    border-radius: 200px;
     margin: 1% auto;
 }
 #get-started-btn {
@@ -42,17 +43,20 @@
 
 .description-item-container {
     justify-content: center;
-    column-gap: 1%;
+    column-gap: 5%;
 }
 .home-description {
-    margin: 0 25%;
+    margin: 0 15%;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: center;
 }
 .home-description h3 {
-    margin: 1%;
+    margin: 2%;
+}
+.home-description h4 {
+    font-size: 20px;
 }
 .home-description img {
     max-width: 125px;
