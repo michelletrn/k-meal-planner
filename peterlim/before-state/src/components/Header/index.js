@@ -30,11 +30,6 @@ const Header = () => {
                 {Auth.loggedIn() ? (
                   <Row>
                     <Col>
-                      <Link to="/search" className="link">
-                        Search
-                      </Link>
-                    </Col>
-                    <Col>
                       <Link to="/me" className="link">
                         {Auth.getProfile().data.username}'s profile
                       </Link>
@@ -47,11 +42,6 @@ const Header = () => {
                   </Row>
                 ) : (
                   <Row>
-                    <Col>
-                      <Link to="/search" className="link">
-                        Search
-                      </Link>
-                    </Col>
                     <Col>
                       <Link to="/login" className="link">
                         Login

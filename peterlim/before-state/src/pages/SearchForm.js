@@ -9,30 +9,9 @@ import SearchResult from "../components/SearchResult";
 
 import "./searchForm.css";
 
-const inputReset = (id) => {
-
-  document.getElementById(id).value = "";
-
-};
-
-const selectReset = (id) => {
-
-  document.getElementById(id).selectedIndex = 0;
-
-};
-
-
-
 const SearchForm = () => {
-
-  // const [state, dispatch] = useRecipeContext();
-
-  // const { categories, areas, category, area, ingredient, mealName } = state;
-
-
   const [categoryList, setCategoryList] = useState([]);
   const [areaList, setAreaList] = useState([]);
-
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedArea, setSelectedArea] = useState("");
   const [searchIngredient, setSearchIngredient] = useState("");
@@ -43,29 +22,19 @@ const SearchForm = () => {
   const handleSelectChange = (event) => {
     if (event.target.name === "area") {
       setSelectedArea(event.target.value);
-      setSelectedCategory("");       
-      inputReset("mealName");  
-      inputReset("ingredient");  
-      selectReset("category");
-     
+      setSelectedCategory("");
+      setSearchIngredient("");
     } else if (event.target.name === "category") {
       setSelectedCategory(event.target.value);
       setSelectedArea("");
-      inputReset("mealName");  
-      inputReset("ingredient");  
-      selectReset("area");      
-     
+      setSearchIngredient("");
     } else if (event.target.name === "ingredient") {
       setSearchIngredient(event.target.value);
-      setSelectedCategory("");
-      setSelectedArea("");
-     
-     
+      // console.log(searchIngredient);
     } else if (event.target.name === "mealName") {
       setSearchMealName(event.target.value);
-      setSelectedCategory("");
-      setSelectedArea("");
-         
+      // console.log(searchMealName);
+       // console.log(searchMealName);
     }
   };
 
@@ -79,23 +48,16 @@ const SearchForm = () => {
     if (event.target.name === "ingredient") {
       setSelectedIngredient(searchIngredient);
       setSelectedMealName("");
-      inputReset("mealName");  
-      selectReset("category");
-      selectReset("area");
       // console.log(searchIngredient);
     } else if (event.target.name === "mealName") {
       setSelectedMealName(searchMealName);
       setSelectedIngredient("");
-      inputReset("ingredient");  
-      selectReset("category");
-      selectReset("area");  
       // console.log("selectedMealName",selectedMealName);
     }
 
     // console.log("selectedIngredient: ",selectedIngredient);
     setSelectedCategory("");
-    setSelectedArea("");    
-    
+    setSelectedArea("");
   };
 
   useEffect(() => {
@@ -108,7 +70,7 @@ const SearchForm = () => {
         }
 
         const { meals } = await response.json();
-        // console.log(meals);
+        console.log(meals);
 
         if (query === "list.php?c=list") {
           setCategoryList(meals);
@@ -134,7 +96,6 @@ const SearchForm = () => {
             name="mealName"
             placeholder="Search Recipe"
             onChange={handleSelectChange}
-            id="mealName"
           />
           <button
             className="searchbar-btn"
@@ -151,8 +112,7 @@ const SearchForm = () => {
             name="ingredient"
             className="searchbar"
             placeholder="Search Ingredient"
-            onChange={handleSelectChange}            
-            id="ingredient"
+            onChange={handleSelectChange}
           />
           <button
             type="submit"
@@ -168,18 +128,15 @@ const SearchForm = () => {
             name="category"
             className="filter"
             onChange={handleSelectChange}
-            id="category"
           >
             <option value="">Category</option>
-            
-            
-             {categoryList.map((category) => (              
+            {categoryList.map((category) => (
               <option key={category.strCategory} value={category.strCategory}>
                 {category.strCategory}
               </option>
             ))}
           </select>{" "}
-          <select name="area" className="filter" onChange={handleSelectChange} id="area">
+          <select name="area" className="filter" onChange={handleSelectChange}>
             <option value=""> Cuisine</option>
             {areaList.map((area) => (
               <option key={area.strArea} value={area.strArea}>
