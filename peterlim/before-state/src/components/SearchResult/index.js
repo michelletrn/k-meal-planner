@@ -9,7 +9,6 @@ import { Col, Row } from "react-bootstrap";
 const SearchResult = ({category, area, ingredient, mealName}) => {
 
     const [recipeList, setRecipeList] = useState([]);
-    const [result, setResult] = useState('random');
 
     useEffect(() => {
         const getRecipe = async (query) => {
@@ -25,8 +24,6 @@ const SearchResult = ({category, area, ingredient, mealName}) => {
                 
                 if(meals !== null)
                     setRecipeList(meals);
-                else
-                    setRecipeList([]);
 
             } catch (err) {
                 console.error(JSON.parse(JSON.stringify(err)));
@@ -38,16 +35,12 @@ const SearchResult = ({category, area, ingredient, mealName}) => {
             getRecipe(`randomselection.php`);
         } else if (area !== '') {
             getRecipe(`filter.php?a=${area}`);
-            setResult(area);
         } else if (category !== '') {
             getRecipe(`filter.php?c=${category}`);
-            setResult(category);
         } else if (ingredient !== '') {
             getRecipe(`filter.php?i=${ingredient}`);
-            setResult(ingredient);
         } else if (mealName !== '') {
             getRecipe(`search.php?s=${mealName}`);
-            setResult(mealName);
         }
 
     }, [category, area, ingredient, mealName]);
@@ -55,7 +48,7 @@ const SearchResult = ({category, area, ingredient, mealName}) => {
     return (
       <div className="recipe-results-container">
         <Row className="recipe-container">
-        <p id="search-req">Showing results for "{result}"</p>
+        <p id="search-req">Showing results for "{category}{area}{ingredient}{mealName}"</p>
           {recipeList.map((recipe) => (
             <Col className="recipe-card" lg={5}>
               <Link to={`/recipe/${recipe.idMeal}`} key={recipe.idMeal}>
