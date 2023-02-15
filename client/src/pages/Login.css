@@ -1,0 +1,30 @@
+.login-form {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form .card {
+    margin: 7%;
+}
+
+.login-form h4{
+    text-align: center;
+}
+.login-btn:hover {
+    opacity: 70%;
+    transition: 1s ease;
+}
+.login-input {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 4%;
+    background-color: rgb(234, 234, 234);
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    height: 30px;
+}
+
+.login-container .login-form .card .card-header,
+.login-container .login-form .card .card-body {
+  border: none;
+}

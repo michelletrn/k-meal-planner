@@ -1,0 +1,28 @@
+.signup-form {
+    display: flex;
+    justify-content: center;
+}
+.signup-form .card {
+    margin: 7%;
+}
+.signup-form h4{
+    text-align: center;
+}
+.signup-input {
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 4%;
+    background-color: rgb(234, 234, 234);
+    border: 1px solid rgb(218, 218, 218);
+    border-radius: 5px;
+    height: 30px;
+}
+.signup-btn:hover {
+    opacity: 70%;
+    transition: 1s ease;
+}
+
+.signup-container .signup-form .card .card-header,
+.signup-container .signup-form .card .card-body {
+  border: none;
+}

@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
+import "./Signup.css";
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -39,20 +40,43 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+    <main
+      className="signup-container"
+      style={{ backgroundColor: "#F5FFF0", height: "80vh" }}
+    >
+      <div className="signup-form">
+        <div className="card" style={{ border: "none" }}>
+          <h4 className="card-header" style={{ backgroundColor: "#FFD2CC" }}>
+            Sign Up
+          </h4>
+          <div
+            className="card-body"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              margin: "0 auto",
+              padding: "9px 25px 25px 25px",
+              backgroundColor: "#FFD2CC",
+            }}
+          >
             {data ? (
               <p>
-                Success! You may now head{' '}
+                Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
+              <form
+                onSubmit={handleFormSubmit}
+                style={{
+                  textAlign: "center",
+                  backgroundColor: "white",
+                  padding: "4%",
+                  borderRadius: "4px",
+                }}
+              >
                 <input
-                  className="form-input"
+                  className="form-input signup-input"
                   placeholder="Your username"
                   name="username"
                   type="text"
@@ -60,7 +84,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="form-input signup-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -68,7 +92,7 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="form-input signup-input"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -76,8 +100,17 @@ const Signup = () => {
                   onChange={handleChange}
                 />
                 <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
+                  className="signup-btn"
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: "#ABD69D",
+                    alignItems: "center",
+                    marginTop: "5%",
+                    width: "150px",
+                    height: "30px",
+                    borderRadius: "3px",
+                    border: "none",
+                  }}
                   type="submit"
                 >
                   Submit
