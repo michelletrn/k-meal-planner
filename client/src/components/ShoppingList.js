@@ -3,23 +3,83 @@ import { Navigate, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { REMOVE_MEAL } from "../utils/mutations";
+import * as Icon from "react-bootstrap-icons";
+import {
+  Container,
+  Row,
+  Col,
+  ButtonGroup,
+  Button,
+  Card,
+} from "react-bootstrap";
+
+import "./ShoppingList.css";
 
 const ShoppingList = ({ shoppingList, setShoppingList }) => {
+  const emailBody = shoppingList.join("%0D%0A");
 
-    // const ingredientList = shoppingList.split( "," );
+  const handleDelete = (index) => {
+    setShoppingList((prevList) =>
+      prevList.filter((_, itemIndex) => itemIndex !== index)
+    );
+  };
+
+  const handleFilter = () => {
+    const filteredList = shoppingList.filter((item) => item !== null);
+    const uniqueList = [...new Set(filteredList)];
+    setShoppingList(uniqueList);
+  };
 
   return (
     <>
-      <h2>Shopping List:</h2>
-      {shoppingList.length === 0 ? (
-        <p>Your shopping list is currently empty</p>
-      ) : (
-        <ul>
-          {shoppingList.map((ingredient) => (
-            <li >{ingredient}</li>
-          ))}
-        </ul>
-      )}
+      <Container>
+        <Row>
+          <Col lg={4}>
+            <ButtonGroup>
+              <Button size="lg" onClick={handleFilter}>
+                Filter List
+              </Button>
+            </ButtonGroup>
+          </Col>
+          <Col lg={4}>
+            <ButtonGroup>
+              <Button
+                size="lg"
+                href={`mailto:?subject=My Shopping List&body=${emailBody}`}
+              >
+                Email Your List!
+              </Button>
+            </ButtonGroup>
+          </Col>
+        </Row>
+        {shoppingList.length === 0 ? (
+          <Row>
+            <p>Your shopping list is currently empty</p>
+          </Row>
+        ) : (
+          shoppingList.map((ingredient, index) => (
+            <Row key={index} className="ingredient-row">
+              <Col lg={8}>
+                <Card className="row">
+                  <Card.Body>
+                    <Card.Title>{ingredient}</Card.Title>
+                  </Card.Body>
+                
+              
+                <div
+                  className="removeIngredientBtn"
+                  onClick={() => handleDelete(index)}
+                >
+                  <Icon.Trash style={{ width: "25px", height: "25px" }}>
+                    Remove Ingredient
+                  </Icon.Trash>
+                </div>
+                </Card>
+              </Col>
+            </Row>
+          ))
+        )}
+      </Container>
     </>
   );
 };
