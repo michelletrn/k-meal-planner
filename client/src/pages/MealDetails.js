@@ -14,6 +14,7 @@ import {
   ADD_TO_CART,
   UPDATE_PRODUCTS,
 } from "../utils/actions";
+import "./MealDetails.css";
 
 import { useMutation } from "@apollo/client";
 import { SAVE_MEAL } from "../utils/mutations";
@@ -197,80 +198,90 @@ const MealDetails = () => {
 
   return (
     <div>
-      <h1>Meal Details</h1>
-      {mealDetails.map((meal) => (
-        <div key={meal.idMeal}>
-          <h2>{meal.strMeal}</h2>
-          <img src={meal.strMealThumb} alt={meal.strMeal} />
-          {meal.strYoutube && (
-            <iframe
-              title={`${meal.strMeal} Video`}
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${meal.strYoutube.slice(
-                -11
-              )}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          )}
-          <p>{meal.strInstructions}</p>
-          <h3>Category: {meal.strCategory}</h3>
-          <h3>Area: {meal.strArea}</h3>
-          <h3>Tags: {meal.strTags}</h3>
-          <h3>Ingredients : Measurements</h3>
-          <ul>
-            {Array.from({ length: 20 }, (_, i) => i + 1).map(
-              (ingredientNum) => {
-                const ingredient = meal[`strIngredient${ingredientNum}`];
-                const measurement = meal[`strMeasure${ingredientNum}`];
-                if (ingredient && measurement) {
-                  return (
-                    <li key={ingredientNum}>
-                      {ingredient}: {measurement}
-                    </li>
-                  );
-                }
-                return null;
-              }
-            )}
-          </ul>
-          {Auth.loggedIn() && (
-            <>
-              <Button
-                disabled={savedMealIds?.some(
-                  (savedMealId) => savedMealId === meal.idMeal
+      <div className="single-recipe-container">
+        {location.pathname !== "/" && (
+          <button className="btn back-btn" onClick={() => navigate(-1)}>
+            &larr; Go Back
+          </button>
+        )}
+        {mealDetails.map((meal) => (
+          <div key={meal.idMeal} className="recipe-details">
+            <h2>{meal.strMeal}</h2>
+            <div className="recipe-img-vid">
+              <img
+                src={meal.strMealThumb}
+                height="300"
+                width="300"
+                alt={meal.strMeal}
+              />
+              {meal.strYoutube && (
+                <iframe
+                  title={`${meal.strMeal} Video`}
+                  width="336"
+                  height="189"
+                  src={`https://www.youtube.com/embed/${meal.strYoutube.slice(
+                    -11
+                  )}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
+            </div>
+            <div>
+              <h3>Instructions</h3>
+              <p>{meal.strInstructions}</p>
+              {/* <h3>Tags: {meal.strTags}</h3> */}
+              <h3>Ingredients: </h3>
+              <ol>
+                {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                  (ingredientNum) => {
+                    const ingredient = meal[`strIngredient${ingredientNum}`];
+                    const measurement = meal[`strMeasure${ingredientNum}`];
+                    if (ingredient && measurement) {
+                      return (
+                        <li key={ingredientNum}>
+                          {ingredient}: {measurement}
+                        </li>
+                      );
+                    }
+                    return null;
+                  }
                 )}
-                className="btn-block btn-info"
-                onClick={() => handleSaveMeal(meal.idMeal)}
-              >
-                {savedMealIds?.some(
-                  (savedMealId) => savedMealId === meal.idMeal
-                )
-                  ? "This meal has already been saved!"
-                  : "Save this Meal!"}
-                {/* Save this Meal! */}
-              </Button>
-              <button onClick={addToCart}>Add to Cart</button>
-              <button
-                disabled={!cart.find((p) => p.idMeal === currentProduct.idMeal)}
-                onClick={removeFromCart}
-              >
-                Remove from Cart
-              </button>
-            </>
-          )}
-        </div>
-      ))}
+              </ol>
+              {Auth.loggedIn() && (
+                <>
+                  <Button
+                    disabled={savedMealIds?.some(
+                      (savedMealId) => savedMealId === meal.idMeal
+                    )}
+                    className="btn-block btn-info"
+                    onClick={() => handleSaveMeal(meal.idMeal)}
+                  >
+                    {savedMealIds?.some(
+                      (savedMealId) => savedMealId === meal.idMeal
+                    )
+                      ? "This meal has already been saved!"
+                      : "Save this Meal!"}
+                    {/* Save this Meal! */}
+                  </Button>
+                  <button onClick={addToCart}>Add to Cart</button>
+                  <button
+                    disabled={
+                      !cart.find((p) => p.idMeal === currentProduct.idMeal)
+                    }
+                    onClick={removeFromCart}
+                  >
+                    Remove from Cart
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
 
-      {/* <Cart /> */}
-
-      {location.pathname !== "/" && (
-        <button className="btn btn-dark mb-3" onClick={() => navigate(-1)}>
-          &larr; Go Back
-        </button>
-      )}
+        {/* <Cart /> */}
+      </div>
     </div>
   );
 };
