@@ -6,7 +6,8 @@ import { REMOVE_MEAL } from "../utils/mutations";
 import * as Icon from "react-bootstrap-icons";
 
 const ShoppingList = ({ shoppingList, setShoppingList }) => {
-  const emailBody = shoppingList.join("%0D%0A");
+  const uniqueIngredients = Array.from(new Set(shoppingList));
+  const emailBody = uniqueIngredients.join("%0D%0A");
 
   const handleDelete = (index) => {
     setShoppingList((prevList) =>
@@ -21,7 +22,7 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
         <p>Your shopping list is currently empty</p>
       ) : (
         <ul>
-          {shoppingList.map((ingredient, index) => (
+          {uniqueIngredients.map((ingredient, index) => (
             <li key={index}>
               {ingredient}
               <div
