@@ -38,14 +38,23 @@ const MealDetails = () => {
   const [saveMeal, { error }] = useMutation(SAVE_MEAL);
 
   useEffect(() => {
+    getMealDetails(`lookup.php?i=${idMeal}`);
+    return () => saveMealIds(savedMealIds);
+  },[]);
+
+
+  useEffect(() => {
+    console.log("Inside useEffect");
     // already in global store
     if (products.length) {
       setCurrentProduct(products.find((product) => product.idMeal === idMeal));
     } else if (mealDetails) {
       mealDetails.forEach((meal) => {
+        console.log("meal", meal);
         dispatch({
           type: UPDATE_PRODUCTS,
-          products: meal,
+          // products: meal,
+          products: {meal: "meal"}
         });
       });
 
@@ -63,7 +72,10 @@ const MealDetails = () => {
     //   });
     // }
     //   }, [products, data, loading, dispatch, idMeal]);
-  }, [products, dispatch, idMeal]);
+  // }, [products, dispatch, idMeal, mealDetails]);
+}, [mealDetails]);
+
+  // }, []);
 
   const getMealDetails = async (query) => {
     try {
@@ -156,15 +168,6 @@ const MealDetails = () => {
     }
   };
 
-  useEffect(() => {
-    getMealDetails(`lookup.php?i=${idMeal}`);
-    return () => saveMealIds(savedMealIds);
-  });
-
-  useEffect(() => {
-    getMealDetails(`lookup.php?i=${idMeal}`);
-    return () => saveMealIds(savedMealIds);
-  });
 
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem.idMeal === idMeal);
@@ -179,6 +182,7 @@ const MealDetails = () => {
       //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       //   });
     } else {
+        console.log("currentProduct: ", currentProduct);
       dispatch({
         type: ADD_TO_CART,
         product: { ...currentProduct, purchaseQuantity: 1 },

@@ -43,7 +43,7 @@ const RecipeProvider = ({ value = [], ...props }) => {
         
         currentCategory: '',
         category: '',
-        area: 'ssss',
+        area: '',
         ingredient: '',
         mealName: '',
 
