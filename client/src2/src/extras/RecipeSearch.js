@@ -25,7 +25,7 @@ const RecipeSearch = ({ handleClick }) => {
       <Container>
         <Row>
           {recipes.map((recipe, index) => (
-            <Col key={index} class="text-center" md={4}>
+            <Col key={index} className="text-center" md={4}>
               <Row>
                 <h4>{recipe.title}</h4>
               </Row>
