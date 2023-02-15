@@ -56,15 +56,16 @@ const MealDetails = () => {
             });
         }
         // get cache from idb
-        else if (!loading) {
-          idbPromise('products', 'get').then((indexedProducts) => {
-            dispatch({
-              type: UPDATE_PRODUCTS,
-              products: indexedProducts,
-            });
-          });
-        }
-      }, [products, data, loading, dispatch, idMeal]);
+        // else if (!loading) {
+        //   idbPromise('products', 'get').then((indexedProducts) => {
+        //     dispatch({
+        //       type: UPDATE_PRODUCTS,
+        //       products: indexedProducts,
+        //     });
+        //   });
+        // }
+    //   }, [products, data, loading, dispatch, idMeal]);
+    }, [products, dispatch, idMeal]);
 
     const getMealDetails = async (query) => {
         try {
