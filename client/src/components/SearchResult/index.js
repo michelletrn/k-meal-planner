@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 
 import { searchRecipes } from '../../utils/API';

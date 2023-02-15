@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import RecipeSearch from "../extras/RecipeSearch";
-import "./home.css";
+import "./Home.css";
 
 const Main = () => {
   console.log('home: /')

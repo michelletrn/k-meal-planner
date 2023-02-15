@@ -10,7 +10,7 @@ const Footer = () => {
     <>
       <Col className="footer-container">
         
-        <p class="footerText">Made By</p>
+        <p className="footerText">Made By</p>
         <Navbar className="justify-content-center footerText">
           <Nav>
             <Nav.Item>
