@@ -20,8 +20,6 @@ import Footer from './components/Footer';
 import MealDetails from './pages/MealDetails';
 import SearchForm from './pages/SearchForm';
 
-import { RecipeProvider } from './utils/GlobalState';
-
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -51,23 +49,21 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          <RecipeProvider>
-            <Header />
-            {/* <SearchForm /> */}
-            <div className="container-fluid">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/search" element={<SearchForm />} />
-                <Route path="/me" element={<Profile />} />
-                <Route path="/profiles/:username" element={<Profile />} />
-                <Route path="/thoughts/:thoughtId" element={<SingleThought />} />
-                <Route path="/recipe/:idMeal" element={<MealDetails />} />
-              </Routes>
-            </div>
-            <Footer />
-          </RecipeProvider>
+          <Header />
+          {/* <SearchForm /> */}
+          <div className="container-fluid">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/search" element={<SearchForm />} />
+              <Route path="/me" element={<Profile />} />
+              <Route path="/profiles/:username" element={<Profile />} />
+              <Route path="/thoughts/:thoughtId" element={<SingleThought />} />
+              <Route path="/recipe/:idMeal" element={<MealDetails />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </Router>
     </ApolloProvider>

@@ -3,69 +3,25 @@ import { useParams } from 'react-router-dom';
 import { searchRecipes } from '../utils/API';
 import Auth from '../utils/auth';
 import { saveMealIds, getSavedMealIds } from '../utils/localStorage';
-
-// import Cart from '../components/Cart';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useRecipeContext } from '../utils/GlobalState';
-import {
-    REMOVE_FROM_CART,
-    UPDATE_CART_QUANTITY,
-    ADD_TO_CART,
-    UPDATE_PRODUCTS,
-} from '../utils/actions';
 
 import { useMutation } from '@apollo/client';
 import { SAVE_MEAL } from '../utils/mutations';
-import { idbPromise } from '../utils/helpers';
 
 const MealDetails = () => {
-
-    const [state, dispatch] = useRecipeContext();
 
     const location = useLocation();
     const navigate = useNavigate();
 
     const { idMeal } = useParams();
-    const { products, cart } = state;
-
-    const [currentProduct, setCurrentProduct] = useState({});
-
     const [mealDetails, setMealDetails] = useState([]);
-    const [saveMeal, { error }] = useMutation(SAVE_MEAL);
+    const [count, setCount] = useState(1);
+    const [saveMeal, {error}] = useMutation(SAVE_MEAL);
 
     // create state to hold saved mealId values
     const [savedMealIds, setSavedMealIds] = useState(getSavedMealIds());
     const [savedMeals, setSavedMeals] = useState([]);
-
-
-    useEffect(() => {
-        // already in global store
-        if (products.length) {
-          setCurrentProduct(products.find((product) => product.idMeal === idMeal));
-        } else if (mealDetails) {
-            mealDetails.forEach((meal) => {                
-               dispatch({
-                    type: UPDATE_PRODUCTS,
-                    products: meal,
-                });
-             });
-    
-             mealDetails.forEach((product) => {
-                idbPromise('products', 'put', product);
-            });
-        }
-        // get cache from idb
-        // else if (!loading) {
-        //   idbPromise('products', 'get').then((indexedProducts) => {
-        //     dispatch({
-        //       type: UPDATE_PRODUCTS,
-        //       products: indexedProducts,
-        //     });
-        //   });
-        // }
-    //   }, [products, data, loading, dispatch, idMeal]);
-    }, [products, dispatch, idMeal]);
 
     const getMealDetails = async (query) => {
         try {
@@ -74,7 +30,7 @@ const MealDetails = () => {
                 throw new Error('something went wrong!');
             }
             const { meals } = await response.json();
-
+            
             const mealData = meals.map((meal) => ({
                 idMeal: meal.idMeal,
                 strMeal: meal.strMeal,
@@ -164,36 +120,6 @@ const MealDetails = () => {
         return () => saveMealIds(savedMealIds);
     });
 
-    const addToCart = () => {
-        const itemInCart = cart.find((cartItem) => cartItem.idMeal === idMeal);
-        if (itemInCart) {
-            dispatch({
-                type: UPDATE_CART_QUANTITY,
-                idMeal: idMeal,
-                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-            });
-            //   idbPromise('cart', 'put', {
-            //     ...itemInCart,
-            //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-            //   });
-        } else {
-            dispatch({
-                type: ADD_TO_CART,
-                product: { ...currentProduct, purchaseQuantity: 1 },
-            });
-            //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
-        }
-    };
-
-    const removeFromCart = () => {
-        dispatch({
-            type: REMOVE_FROM_CART,
-            idMeal: currentProduct.idMeal,
-        });
-
-        // idbPromise('cart', 'delete', { ...currentProduct });
-    };
-
     return (
         <div>
             <h1>Meal Details</h1>
@@ -232,38 +158,27 @@ const MealDetails = () => {
                         })}
                     </ul>
                     {Auth.loggedIn() && (
-                        <>
-                            <Button
-                                disabled={savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)}
-                                className='btn-block btn-info'
-                                onClick={() => handleSaveMeal(meal.idMeal)}>
-                                {savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)
-                                    ? 'This meal has already been saved!'
-                                    : 'Save this Meal!'}
-                                {/* Save this Meal! */}
-                            </Button>
-                            <button onClick={addToCart}>Add to Cart</button>
-                            <button
-                                disabled={!cart.find((p) => p.idMeal === currentProduct.idMeal)}
-                                onClick={removeFromCart}
-                            >
-                                Remove from Cart
-                            </button>
-                        </>
-                    )}
+                    <Button
+                      disabled={savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveMeal(meal.idMeal)}>
+                      {savedMealIds?.some((savedMealId) => savedMealId === meal.idMeal)
+                        ? 'This meal has already been saved!'
+                        : 'Save this Meal!'}
+                        {/* Save this Meal! */}
+                    </Button>
+                   )}
                 </div>
             ))}
-
-            {/* <Cart /> */}
-
+            
             {location.pathname !== '/' && (
-                <button
-                    className="btn btn-dark mb-3"
-                    onClick={() => navigate(-1)}
-                >
-                    &larr; Go Back
-                </button>
-            )}
+          <button
+            className="btn btn-dark mb-3"
+            onClick={() => navigate(-1)}
+          >
+            &larr; Go Back
+          </button>
+        )}
 
         </div>
     );
