@@ -7,7 +7,8 @@ import * as Icon from "react-bootstrap-icons";
 
 const ShoppingList = ({ shoppingList, setShoppingList }) => {
   const uniqueIngredients = Array.from(new Set(shoppingList));
-  const emailBody = uniqueIngredients.join("%0D%0A");
+  const filteredIngredients = uniqueIngredients.filter((ingredient) => ingredient != null);
+  const emailBody = filteredIngredients.join("%0D%0A");
 
   const handleDelete = (index) => {
     setShoppingList((prevList) =>
@@ -22,7 +23,7 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
         <p>Your shopping list is currently empty</p>
       ) : (
         <ul>
-          {uniqueIngredients.map((ingredient, index) => (
+          {filteredIngredients.map((ingredient, index) => (
             <li key={index}>
               {ingredient}
               <div
