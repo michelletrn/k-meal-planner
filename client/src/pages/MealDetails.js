@@ -4,7 +4,7 @@ import { searchRecipes } from "../utils/API";
 import Auth from "../utils/auth";
 import { saveMealIds, getSavedMealIds } from "../utils/localStorage";
 
-import Cart from '../components/Cart';
+import Cart from "../components/Cart";
 import { Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecipeContext } from "../utils/GlobalState";
@@ -37,13 +37,10 @@ import { idbPromise } from "../utils/helpers";
 // // Log the array of checked values
 // console.log("checkedValues: ", checkedValues);
 
-
-
 const MealDetails = () => {
   const [savedMealIds, setSavedMealIds] = useState(getSavedMealIds());
   const [savedMeals, setSavedMeals] = useState([]);
   const [shoppingList, setShoppingList] = useState([]);
-
 
   const [state, dispatch] = useRecipeContext();
 
@@ -65,15 +62,12 @@ const MealDetails = () => {
     return () => saveMealIds(savedMealIds);
   }, []);
 
-
   // useEffect(() => {
-  //   console.log("Inside useEffect");    
+  //   console.log("Inside useEffect");
   //   if (products.length) {
   //     setCurrentProduct(products.find((product) => product.idMeal === idMeal));
-  //   } 
+  //   }
   // }, []);
-
-
 
   const getMealDetails = async (query) => {
     try {
@@ -140,7 +134,6 @@ const MealDetails = () => {
 
       setSavedMeals(mealData);
       setMealDetails(mealData);
-
     } catch (err) {
       console.error(err);
     }
@@ -165,15 +158,13 @@ const MealDetails = () => {
     }
   };
 
-
   const addToCart = () => {
-
     console.log("!!!shoppingList: ", shoppingList);
-    const test = ["abc","def","ghi"];
+    const test = ["abc", "def", "ghi"];
     const item = "abc";
 
     shoppingList.forEach((item) => {
-    // test.forEach((item) => {
+      // test.forEach((item) => {
       const itemInCart = cart.find((cartItem) => cartItem.item === item);
       if (itemInCart) {
         dispatch({
@@ -196,13 +187,13 @@ const MealDetails = () => {
     });
 
     console.log("cart: ", cart);
-  }
+  };
 
   const removeFromCart = () => {
     shoppingList.forEach((item) => {
       dispatch({
         type: REMOVE_FROM_CART,
-        item: item
+        item: item,
       });
     });
 
@@ -217,7 +208,7 @@ const MealDetails = () => {
     const checkedValues = [];
 
     // Loop through all the checkboxes and check if they are checked
-    checkboxes.forEach(checkbox => {
+    checkboxes.forEach((checkbox) => {
       if (checkbox.checked) {
         // If the checkbox is checked, add its value to the checkedValues array
         checkedValues.push(checkbox.value);
@@ -228,11 +219,9 @@ const MealDetails = () => {
     setShoppingList(checkedValues);
     console.log("edited checkedValues: ", checkedValues);
     console.log("shoppingList: ", shoppingList);
-
   };
 
   // checkChangeController();
-
 
   return (
     <div>
@@ -245,38 +234,56 @@ const MealDetails = () => {
         {mealDetails.map((meal) => (
           <div key={meal.idMeal} className="recipe-details">
             <h2>{meal.strMeal}</h2>
-            <div className="recipe-img-vid">
-              <img
-                src={meal.strMealThumb}
-                height="300"
-                width="300"
-                alt={meal.strMeal}
-              />
-              {meal.strYoutube && (
-                <iframe
-                  title={`${meal.strMeal} Video`}
-                  width="336"
-                  height="189"
-                  src={`https://www.youtube.com/embed/${meal.strYoutube.slice(
-                    -11
-                  )}`}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+            <h4>
+              {meal.strArea} {meal.strCategory}
+            </h4>
+            <div style={{ display: "flex" }}>
+              <div className="recipe-img-vid">
+                <img
+                  src={meal.strMealThumb}
+                  height="250"
+                  width="250"
+                  alt={meal.strMeal}
                 />
-              )}
+                {meal.strYoutube && (
+                  <iframe
+                    title={`${meal.strMeal} Video`}
+                    width="336"
+                    height="189"
+                    src={`https://www.youtube.com/embed/${meal.strYoutube.slice(
+                      -11
+                    )}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  margin: "0 2%",
+                }}
+              >
+                <h3>Instructions</h3>
+                <p>{meal.strInstructions}</p>
+                {/* <h3>Tags: {meal.strTags}</h3> */}
+              </div>
             </div>
             <div>
-              <h3>Instructions</h3>
-              <p>{meal.strInstructions}</p>
-              {/* <h3>Tags: {meal.strTags}</h3> */}
               <h3>Ingredients: </h3>
               <ol>
                 {meal.strIngredients.map((ingredient, index) => {
                   if (ingredient) {
                     return (
                       <li key={index}>
-                        <input type="checkbox" defaultChecked={false} value={ingredient} onChange={checkChangeController} />{' '}
+                        <input
+                          type="checkbox"
+                          defaultChecked={false}
+                          value={ingredient}
+                          onChange={checkChangeController}
+                        />{" "}
                         {ingredient}: {meal.strMeasures[index]}
                       </li>
                     );
@@ -296,9 +303,6 @@ const MealDetails = () => {
                   </li>
                 ))} */}
 
-
-
-
                 {/* {Array.from({ length: 20 }, (_, i) => i + 1).map(
                   (ingredientNum) => {
                     const ingredient = meal[`strIngredient${ingredientNum}`];
@@ -314,34 +318,30 @@ const MealDetails = () => {
                   }
                 )} */}
               </ol>
-              {Auth.loggedIn() && (                
-                  <Button
-                    disabled={savedMealIds?.some(
-                      (savedMealId) => savedMealId === meal.idMeal
-                    )}
-                    className="btn-block btn-info"
-                    onClick={() => handleSaveMeal(meal.idMeal)}
-                  >
-                    {savedMealIds?.some(
-                      (savedMealId) => savedMealId === meal.idMeal
-                    )
-                      ? "This meal has already been saved!"
-                      : "Save this Meal!"}
-                    {/* Save this Meal! */}
-                  </Button>             
-                
-                )}
-                <button onClick={addToCart}>Add to Cart</button>
-                  <button
-                    disabled={
-                      !cart.find((p) => p.idMeal === currentProduct.idMeal)
-                    }
-                    onClick={removeFromCart}
-                  >
-                    Remove from Cart
-                  </button>
-              
             </div>
+            {Auth.loggedIn() && (
+              <Button
+                disabled={savedMealIds?.some(
+                  (savedMealId) => savedMealId === meal.idMeal
+                )}
+                className="btn-block btn-info"
+                onClick={() => handleSaveMeal(meal.idMeal)}
+              >
+                {savedMealIds?.some(
+                  (savedMealId) => savedMealId === meal.idMeal
+                )
+                  ? "This meal has already been saved!"
+                  : "Save this Meal!"}
+                {/* Save this Meal! */}
+              </Button>
+            )}
+            <button onClick={addToCart}>Add to Cart</button>
+            <button
+              disabled={!cart.find((p) => p.idMeal === currentProduct.idMeal)}
+              onClick={removeFromCart}
+            >
+              Remove from Cart
+            </button>
           </div>
         ))}
 
