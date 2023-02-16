@@ -27,12 +27,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.product],
+        cart: [...state.cart, action.product]
       };
     case ADD_MULTIPLE_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, ...action.products],
+        // cart: [...state.cart].push(action.products)],
       };
     // Returns a copy of state, sets the cartOpen to true and maps through the items in the cart.
     // If the item's `id` matches the `id` that was provided in the action.payload, we update the purchase quantity.
@@ -41,7 +41,7 @@ export const reducer = (state, action) => {
         ...state,
         cartOpen: true,
         cart: state.cart.map((product) => {
-          if (action._id === product._id) {
+          if (action.item === product.item) {
             product.purchaseQuantity = action.purchaseQuantity;
           }
           return product;
@@ -52,7 +52,7 @@ export const reducer = (state, action) => {
     // If so, we remove it from our cart and set the updated state to a variable called `newState`
     case REMOVE_FROM_CART:
       let newState = state.cart.filter((product) => {
-        return product._id !== action._id;
+        return product.item !== action.item;
       });
 
       // Then we return a copy of state and check to see if the cart is empty.

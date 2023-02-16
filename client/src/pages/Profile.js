@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { REMOVE_MEAL } from "../utils/mutations";
 import * as Icon from "react-bootstrap-icons";
 import { Row, Col } from "react-bootstrap";
+import Cart from '../components/Cart';
 import "./Profile.css";
 import ShoppingList from "../components/ShoppingList";
 // import ThoughtForm from '../components/ThoughtForm';
@@ -133,6 +134,7 @@ const Profile = () => {
         shoppingList={shoppingList}
         setShoppingList={setShoppingList}
       />
+      <Cart />
     </div>
   );
 };
