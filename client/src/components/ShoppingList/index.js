@@ -35,11 +35,12 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
       <Container>
         <Row>
           <Col lg={4}>
-            <ButtonGroup>
-              <Button size="lg" onClick={handleFilter}>
-                Filter List
-              </Button>
-            </ButtonGroup>
+            <button
+              // onClick={() => handleAddToShoppingList(getIngredients(recipe))}
+              onClick={() => handleFilter()}
+            >
+              Add to Shopping List
+            </button>
           </Col>
           <Col lg={4}>
             <ButtonGroup>
@@ -52,33 +53,32 @@ const ShoppingList = ({ shoppingList, setShoppingList }) => {
             </ButtonGroup>
           </Col>
         </Row>
-        {shoppingList.length === 0 ? (
-          <Row>
-            <p>Your shopping list is currently empty</p>
-          </Row>
-        ) : (
-          shoppingList.map((ingredient, index) => (
-            <Row key={index} className="ingredient-row">
-              <Col lg={8}>
-                <Card className="row">
+        <Row className="ingredient-row">
+          {shoppingList.length === 0 ? (
+            <Row>
+              <p>Your shopping list is currently empty</p>
+            </Row>
+          ) : (
+            shoppingList.map((ingredient, index) => (
+              <Col lg={4}>
+                <Card class>
                   <Card.Body>
                     <Card.Title>{ingredient}</Card.Title>
                   </Card.Body>
-                
-              
-                <div
-                  className="removeIngredientBtn"
-                  onClick={() => handleDelete(index)}
-                >
-                  <Icon.Trash style={{ width: "25px", height: "25px" }}>
-                    Remove Ingredient
-                  </Icon.Trash>
-                </div>
+
+                  <div
+                    className="removeIngredientBtn"
+                    onClick={() => handleDelete(index)}
+                  >
+                    <Icon.Trash style={{ width: "25px", height: "25px" }}>
+                      Remove Ingredient
+                    </Icon.Trash>
+                  </div>
                 </Card>
               </Col>
-            </Row>
-          ))
-        )}
+            ))
+          )}
+        </Row>
       </Container>
     </>
   );
