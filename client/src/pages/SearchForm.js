@@ -127,7 +127,7 @@ const SearchForm = () => {
   return (
     <div className="container-fluid">
       <div className="search-container">
-        <div>
+        <div className="search-small-screen">
           <input
             className="searchbar"
             type="text"

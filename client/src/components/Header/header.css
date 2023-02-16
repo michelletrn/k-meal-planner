@@ -40,13 +40,14 @@ header {
 }
 
 @media screen and (width <= 750px) {
-    .navbar-links {
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-    }
     .navbar {
         text-align: center;
         justify-content: center;
+    }
+    .title-links {
+        flex-direction: column;
+    }
+    .page-title {
+        text-align: center;
     }
 }
