@@ -19,6 +19,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MealDetails from './pages/MealDetails';
 import SearchForm from './pages/SearchForm';
+import Success from './pages/Success';
 
 import { RecipeProvider } from './utils/GlobalState';
 
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/profiles/:username" element={<Profile />} />
                 <Route path="/thoughts/:thoughtId" element={<SingleThought />} />
                 <Route path="/recipe/:idMeal" element={<MealDetails />} />
+                <Route path="/success" element={<Success />} />
               </Routes>
             </div>
             <Footer />

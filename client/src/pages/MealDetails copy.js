@@ -4,7 +4,7 @@ import { searchRecipes } from "../utils/API";
 import Auth from "../utils/auth";
 import { saveMealIds, getSavedMealIds } from "../utils/localStorage";
 
-import Cart from '../components/Cart';
+// import Cart from '../components/Cart';
 import { Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecipeContext } from "../utils/GlobalState";
@@ -20,30 +20,9 @@ import { useMutation } from "@apollo/client";
 import { SAVE_MEAL } from "../utils/mutations";
 import { idbPromise } from "../utils/helpers";
 
-// // Get all the checkboxes in the ordered list
-// const checkboxes = document.querySelectorAll('ol input[type="checkbox"]');
-
-// // Create an empty array to store the checked values
-// const checkedValues = [];
-
-// // Loop through all the checkboxes and check if they are checked
-// checkboxes.forEach(checkbox => {
-//   if (checkbox.checked) {
-//     // If the checkbox is checked, add its value to the checkedValues array
-//     checkedValues.push(checkbox.value);
-//   }
-// });
-
-// // Log the array of checked values
-// console.log("checkedValues: ", checkedValues);
-
-
-
 const MealDetails = () => {
   const [savedMealIds, setSavedMealIds] = useState(getSavedMealIds());
   const [savedMeals, setSavedMeals] = useState([]);
-  const [shoppingList, setShoppingList] = useState([]);
-
 
   const [state, dispatch] = useRecipeContext();
 
@@ -60,20 +39,41 @@ const MealDetails = () => {
 
   useEffect(() => {
     getMealDetails(`lookup.php?i=${idMeal}`);
-    // setShoppingList(checkedValues);
-    checkChangeController();
     return () => saveMealIds(savedMealIds);
-  }, []);
+  },[]);
 
 
-  // useEffect(() => {
-  //   console.log("Inside useEffect");    
-  //   if (products.length) {
-  //     setCurrentProduct(products.find((product) => product.idMeal === idMeal));
-  //   } 
+  useEffect(() => {
+    console.log("Inside useEffect");
+    // already in global store
+    if (products.length) {
+      setCurrentProduct(products.find((product) => product.idMeal === idMeal));
+    } else if (mealDetails) {
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          // products: meal,
+          // products: [{meal: "meal"}]
+          products: mealDetails
+        });      
+
+      mealDetails.forEach((product) => {
+        idbPromise("products", "put", product);
+      });
+    }
+    // get cache from idb
+    // else if (!loading) {
+    //   idbPromise('products', 'get').then((indexedProducts) => {
+    //     dispatch({
+    //       type: UPDATE_PRODUCTS,
+    //       products: indexedProducts,
+    //     });
+    //   });
+    // }
+    //   }, [products, data, loading, dispatch, idMeal]);
+  // }, [products, dispatch, idMeal, mealDetails]);
+}, [mealDetails]);
+
   // }, []);
-
-
 
   const getMealDetails = async (query) => {
     try {
@@ -139,8 +139,8 @@ const MealDetails = () => {
       }));
 
       setSavedMeals(mealData);
-      setMealDetails(mealData);
 
+      setMealDetails(meals);
     } catch (err) {
       console.error(err);
     }
@@ -148,6 +148,7 @@ const MealDetails = () => {
 
   const handleSaveMeal = async (idMeal) => {
     const mealToSave = savedMeals.find((meal) => meal.idMeal === idMeal);
+    // const mealToSave = savedMeals[0];
 
     console.log("mealToSave: ", mealToSave);
     try {
@@ -167,72 +168,35 @@ const MealDetails = () => {
 
 
   const addToCart = () => {
-
-    console.log("!!!shoppingList: ", shoppingList);
-    const test = ["abc","def","ghi"];
-    const item = "abc";
-
-    shoppingList.forEach((item) => {
-    // test.forEach((item) => {
-      const itemInCart = cart.find((cartItem) => cartItem.item === item);
-      if (itemInCart) {
-        dispatch({
-          type: UPDATE_CART_QUANTITY,
-          item,
-          purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-        });
-        //   idbPromise('cart', 'put', {
-        //     ...itemInCart,
-        //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-        //   });
-      } else {
-        console.log("currentProduct: ", item);
-        dispatch({
-          type: ADD_TO_CART,
-          product: { item: item, price: 0.99, purchaseQuantity: 1 },
-        });
-        //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
-      }
-    });
-
-    console.log("cart: ", cart);
-  }
+    const itemInCart = cart.find((cartItem) => cartItem.idMeal === idMeal);
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        idMeal: idMeal,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
+      //   idbPromise('cart', 'put', {
+      //     ...itemInCart,
+      //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      //   });
+    } else {
+        console.log("currentProduct: ", currentProduct);
+      dispatch({
+        type: ADD_TO_CART,
+        product: { ...currentProduct, purchaseQuantity: 1 },
+      });
+      //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+    }
+  };
 
   const removeFromCart = () => {
-    shoppingList.forEach((item) => {
-      dispatch({
-        type: REMOVE_FROM_CART,
-        item: item
-      });
+    dispatch({
+      type: REMOVE_FROM_CART,
+      idMeal: currentProduct.idMeal,
     });
 
     // idbPromise('cart', 'delete', { ...currentProduct });
   };
-
-  const checkChangeController = () => {
-    // Get all the checkboxes in the ordered list
-    const checkboxes = document.querySelectorAll('ol input[type="checkbox"]');
-
-    // Create an empty array to store the checked values
-    const checkedValues = [];
-
-    // Loop through all the checkboxes and check if they are checked
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        // If the checkbox is checked, add its value to the checkedValues array
-        checkedValues.push(checkbox.value);
-      }
-    });
-
-    // Log the array of checked values
-    setShoppingList(checkedValues);
-    console.log("edited checkedValues: ", checkedValues);
-    console.log("shoppingList: ", shoppingList);
-
-  };
-
-  // checkChangeController();
-
 
   return (
     <div>
@@ -272,34 +236,7 @@ const MealDetails = () => {
               {/* <h3>Tags: {meal.strTags}</h3> */}
               <h3>Ingredients: </h3>
               <ol>
-                {meal.strIngredients.map((ingredient, index) => {
-                  if (ingredient) {
-                    return (
-                      <li key={index}>
-                        <input type="checkbox" defaultChecked={false} value={ingredient} onChange={checkChangeController} />{' '}
-                        {ingredient}: {meal.strMeasures[index]}
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
-
-                {/* {products.map((product) => (
-                  <li key={product}>
-                    {product}
-                  </li>
-                ))}
-
-                {cart.map((item) => (
-                  <li key={item.item}>
-                    {item.item} x {item.purchaseQuantity}
-                  </li>
-                ))} */}
-
-
-
-
-                {/* {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                {Array.from({ length: 20 }, (_, i) => i + 1).map(
                   (ingredientNum) => {
                     const ingredient = meal[`strIngredient${ingredientNum}`];
                     const measurement = meal[`strMeasure${ingredientNum}`];
@@ -312,9 +249,10 @@ const MealDetails = () => {
                     }
                     return null;
                   }
-                )} */}
+                )}
               </ol>
-              {Auth.loggedIn() && (                
+              {Auth.loggedIn() && (
+                <>
                   <Button
                     disabled={savedMealIds?.some(
                       (savedMealId) => savedMealId === meal.idMeal
@@ -328,10 +266,8 @@ const MealDetails = () => {
                       ? "This meal has already been saved!"
                       : "Save this Meal!"}
                     {/* Save this Meal! */}
-                  </Button>             
-                
-                )}
-                <button onClick={addToCart}>Add to Cart</button>
+                  </Button>
+                  <button onClick={addToCart}>Add to Cart</button>
                   <button
                     disabled={
                       !cart.find((p) => p.idMeal === currentProduct.idMeal)
@@ -340,12 +276,13 @@ const MealDetails = () => {
                   >
                     Remove from Cart
                   </button>
-              
+                </>
+              )}
             </div>
           </div>
         ))}
 
-        <Cart />
+        {/* <Cart /> */}
       </div>
     </div>
   );
