@@ -1,7 +1,7 @@
 .single-recipe-container {
     display: flex;
     flex-direction: column;
-    margin: 5% 15%;
+    margin: 5% 10%;
     padding-bottom: 50px;
     background-color: rgb(233, 255, 200);
     border-radius: 10px;
@@ -29,6 +29,9 @@
     margin: 1% 5%;
     display: flex;
     flex-direction: column;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgb(238, 255, 212);
 }
 .recipe-details h2 {
     text-align: center;
@@ -36,7 +39,6 @@
 .recipe-details h3 {
     line-height: 2;
     font-size: 20px;
-    text-align: center;
 }
 .recipe-details h4 {
     font-size: medium;
@@ -52,4 +54,12 @@
 }
 .back-btn:hover {
     opacity: 90%;
+}
+
+.btn {
+    margin: 1%;
+}
+
+.btn:hover {
+    opacity: 70%;
 }

@@ -241,8 +241,8 @@ const MealDetails = () => {
               <div className="recipe-img-vid">
                 <img
                   src={meal.strMealThumb}
-                  height="250"
-                  width="250"
+                  height="275"
+                  width="336"
                   alt={meal.strMeal}
                 />
                 {meal.strYoutube && (
@@ -266,32 +266,30 @@ const MealDetails = () => {
                   margin: "0 2%",
                 }}
               >
-                <h3>Instructions</h3>
+                <h3 style={{ textAlign: "center" }}>Instructions</h3>
                 <p>{meal.strInstructions}</p>
                 {/* <h3>Tags: {meal.strTags}</h3> */}
-              </div>
-            </div>
-            <div>
-              <h3>Ingredients: </h3>
-              <ol>
-                {meal.strIngredients.map((ingredient, index) => {
-                  if (ingredient) {
-                    return (
-                      <li key={index}>
-                        <input
-                          type="checkbox"
-                          defaultChecked={false}
-                          value={ingredient}
-                          onChange={checkChangeController}
-                        />{" "}
-                        {ingredient}: {meal.strMeasures[index]}
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
+                <div>
+                  <h3>Ingredients: </h3>
+                  <ol>
+                    {meal.strIngredients.map((ingredient, index) => {
+                      if (ingredient) {
+                        return (
+                          <li key={index}>
+                            <input
+                              type="checkbox"
+                              defaultChecked={false}
+                              value={ingredient}
+                              onChange={checkChangeController}
+                            />{" "}
+                            {ingredient}: {meal.strMeasures[index]}
+                          </li>
+                        );
+                      }
+                      return null;
+                    })}
 
-                {/* {products.map((product) => (
+                    {/* {products.map((product) => (
                   <li key={product}>
                     {product}
                   </li>
@@ -303,7 +301,7 @@ const MealDetails = () => {
                   </li>
                 ))} */}
 
-                {/* {Array.from({ length: 20 }, (_, i) => i + 1).map(
+                    {/* {Array.from({ length: 20 }, (_, i) => i + 1).map(
                   (ingredientNum) => {
                     const ingredient = meal[`strIngredient${ingredientNum}`];
                     const measurement = meal[`strMeasure${ingredientNum}`];
@@ -317,31 +315,53 @@ const MealDetails = () => {
                     return null;
                   }
                 )} */}
-              </ol>
+                  </ol>
+                </div>
+              </div>
             </div>
-            {Auth.loggedIn() && (
-              <Button
-                disabled={savedMealIds?.some(
-                  (savedMealId) => savedMealId === meal.idMeal
-                )}
-                className="btn-block btn-info"
-                onClick={() => handleSaveMeal(meal.idMeal)}
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
               >
-                {savedMealIds?.some(
-                  (savedMealId) => savedMealId === meal.idMeal
-                )
-                  ? "This meal has already been saved!"
-                  : "Save this Meal!"}
-                {/* Save this Meal! */}
-              </Button>
-            )}
-            <button onClick={addToCart}>Add to Cart</button>
-            <button
-              disabled={!cart.find((p) => p.idMeal === currentProduct.idMeal)}
-              onClick={removeFromCart}
-            >
-              Remove from Cart
-            </button>
+                {Auth.loggedIn() && (
+                  <button
+                    disabled={savedMealIds?.some(
+                      (savedMealId) => savedMealId === meal.idMeal
+                    )}
+                    className="save-btn btn"
+                    style={{ fontWeight: "600" }}
+                    onClick={() => handleSaveMeal(meal.idMeal)}
+                  >
+                    {savedMealIds?.some(
+                      (savedMealId) => savedMealId === meal.idMeal
+                    )
+                      ? "Recipe Saved"
+                      : "Save Recipe"}
+                  </button>
+                )}
+                <button
+                  className="add-btn btn"
+                  onClick={addToCart}
+                  style={{ fontWeight: "600" }}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  className="remove-btn btn"
+                  style={{ fontWeight: "600" }}
+                  disabled={
+                    !cart.find((p) => p.idMeal === currentProduct.idMeal)
+                  }
+                  onClick={removeFromCart}
+                >
+                  Remove from Cart
+                </button>
+              </div>
+            </div>
           </div>
         ))}
 
