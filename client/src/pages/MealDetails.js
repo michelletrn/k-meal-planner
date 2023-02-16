@@ -314,8 +314,7 @@ const MealDetails = () => {
                   }
                 )} */}
               </ol>
-              {Auth.loggedIn() && (
-                <>
+              {Auth.loggedIn() && (                
                   <Button
                     disabled={savedMealIds?.some(
                       (savedMealId) => savedMealId === meal.idMeal
@@ -329,8 +328,10 @@ const MealDetails = () => {
                       ? "This meal has already been saved!"
                       : "Save this Meal!"}
                     {/* Save this Meal! */}
-                  </Button>
-                  <button onClick={addToCart}>Add to Cart</button>
+                  </Button>             
+                
+                )}
+                <button onClick={addToCart}>Add to Cart</button>
                   <button
                     disabled={
                       !cart.find((p) => p.idMeal === currentProduct.idMeal)
@@ -339,8 +340,7 @@ const MealDetails = () => {
                   >
                     Remove from Cart
                   </button>
-                </>
-              )}
+              
             </div>
           </div>
         ))}
