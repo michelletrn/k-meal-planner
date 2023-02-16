@@ -1,6 +1,12 @@
-const {gql} = require('apollo-server-express');
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
+    type Category {
+        _id: ID
+        name: String
+    }
+    
     type User {
         _id: ID!
         username: String!
@@ -24,6 +30,27 @@ const typeDefs = gql`
         commentAuthor: String!
         createdAt: String!
     }
+
+    type Product {
+        _id: ID
+        name: String
+        description: String
+        image: String
+        quantity: Int
+        price: Float
+        category: Category
+    }
+
+    type Order {
+        _id: ID
+        purchaseDate: String
+        products: [Product]
+    }
+
+    type Checkout {
+        session: ID
+    }
+
 
     type Auth {
         token: ID!
@@ -63,6 +90,9 @@ const typeDefs = gql`
         post(postId: ID!): Post
         comments(postId: ID!): [Comment]
         users: [User]
+        product(_id: ID!): Product
+        order(_id: ID!): Order
+        checkout(products: [ID]!): Checkout
 
     }
 
@@ -73,9 +103,11 @@ const typeDefs = gql`
         addComment(postId: ID!, commentText: String!): Post
         removePost(postId: ID!): Post
         removeComment(postId: ID!, commentId: ID!): Post
-        
+        updateProduct(_id: ID!, quantity: Int!): Product
+        addProduct(name: String!, description: String!, image: String!, quantity: Int!, price: Float!, category: String!): Product
         saveRecipe(mealData: RecipeInput!) : User
         removeRecipe(idMeal: String!): User
+        addOrder(products: [ID]!): Order
     }
 `;
 

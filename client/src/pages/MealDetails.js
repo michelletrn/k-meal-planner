@@ -189,7 +189,7 @@ const MealDetails = () => {
         console.log("currentProduct: ", item);
         dispatch({
           type: ADD_TO_CART,
-          product: { item: item, purchaseQuantity: 1 },
+          product: { item: item, price: 0.99, purchaseQuantity: 1 },
         });
         //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
       }
