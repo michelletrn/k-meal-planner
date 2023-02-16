@@ -22,17 +22,17 @@ You will also need to create a .env file in the root directory and set the follo
 
 ## Technologies Used
 
--MongoDB
--Express
--React
--Node.js
--JWT
--Bootstrap / React Bootstap / Icons
--Stripe
--Custom CSS
--GraphQL
--env-cmd (Protect sensitive key information on the client side)
--API call from TheMealDB
+-MongoDB <br />
+-Express <br />
+-React <br />
+-Node.js <br />
+-JWT <br />
+-Bootstrap / React Bootstap / Icons <br />
+-Stripe <br />
+-Custom CSS <br />
+-GraphQL <br />
+-env-cmd (Protect sensitive key information on the client side) <br />
+-API call from TheMealDB <br />
 
 ## Screenshots
 
