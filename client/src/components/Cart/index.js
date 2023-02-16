@@ -8,6 +8,7 @@ import Auth from '../../utils/auth';
 import { useRecipeContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 import './style.css';
+import {Button} from "react-bootstrap";
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
@@ -22,6 +23,15 @@ const Cart = () => {
       });
     }
   }, [data]);
+
+  // const emailHandler = () => {
+  const shoppingList = state.cart.map((item) => {
+    return item.item;
+  });
+
+  const emailBody = shoppingList.join("%0D%0A");
+
+  // }
 
   // useEffect(() => {
   //   async function getCart() {
@@ -87,7 +97,16 @@ const Cart = () => {
             
 
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <div>
+              <Button onClick={submitCheckout}>Checkout</Button>
+              {" "}
+              <Button 
+                href={`mailto:?subject=My Shopping List&body=${emailBody}`}
+                // onClick={emailHandler}
+                >
+                Email
+              </Button>
+              </div>
             ) : (
               <span>(log in to check out)</span>
             )}
