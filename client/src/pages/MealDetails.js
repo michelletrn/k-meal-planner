@@ -5,7 +5,6 @@ import Auth from "../utils/auth";
 import { saveMealIds, getSavedMealIds } from "../utils/localStorage";
 
 import Cart from "../components/Cart";
-import { Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecipeContext } from "../utils/GlobalState";
 import {
@@ -237,7 +236,7 @@ const MealDetails = () => {
             <h4>
               {meal.strArea} {meal.strCategory}
             </h4>
-            <div style={{ display: "flex" }}>
+            <div className="recipe-screens">
               <div className="recipe-img-vid">
                 <img
                   src={meal.strMealThumb}
@@ -263,7 +262,7 @@ const MealDetails = () => {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  margin: "0 2%",
+                  margin: "1% 2%",
                 }}
               >
                 <h3 style={{ textAlign: "center" }}>Instructions</h3>
