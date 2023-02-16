@@ -69,7 +69,7 @@
     opacity: 70%;
 }
 
-@media screen and (width <= 1460px) {
+@media screen and (width <= 992px) {
     .recipe-screens {
         flex-direction: column;
     }
