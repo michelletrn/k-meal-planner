@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
-import { REMOVE_MEAL } from "../utils/mutations";
+import { REMOVE_MEAL } from "../../utils/mutations";
 import * as Icon from "react-bootstrap-icons";
 import {
   Container,

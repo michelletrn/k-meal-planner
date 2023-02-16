@@ -7,7 +7,7 @@ import * as Icon from "react-bootstrap-icons";
 import { Row, Col } from "react-bootstrap";
 import Cart from '../components/Cart';
 import "./Profile.css";
-import ShoppingList from "../components/ShoppingList";
+// import ShoppingList from "../components/ShoppingList/ShoppingList";
 // import ThoughtForm from '../components/ThoughtForm';
 // import ThoughtList from '../components/ThoughtList';
 
@@ -46,12 +46,12 @@ const Profile = () => {
     return ingredients;
   };
 
-  const handleAddToShoppingList = (ingredients) => {
-    setShoppingList((prevShoppingList) => [
-      ...prevShoppingList,
-      ...ingredients,
-    ]);
-  };
+  // const handleAddToShoppingList = (ingredients) => {
+  //   setShoppingList((prevShoppingList) => [
+  //     ...prevShoppingList,
+  //     ...ingredients,
+  //   ]);
+  // };
 
   const handleDeleteMeal = async (idMeal) => {
     try {
@@ -120,20 +120,20 @@ const Profile = () => {
               </div>
 
               {/* add to cart btn will go here */}
-              <button
+              {/* <button
                 // onClick={() => handleAddToShoppingList(getIngredients(recipe))}
                 onClick={() => handleAddToShoppingList(recipe.strIngredients)}
               >
                 Add to Shopping List
-              </button>
+              </button> */}
             </div>
           </Col>
         ))}
       </Row>
-      <ShoppingList
+      {/* <ShoppingList
         shoppingList={shoppingList}
         setShoppingList={setShoppingList}
-      />
+      /> */}
       <Cart />
     </div>
   );
