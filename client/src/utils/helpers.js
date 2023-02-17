@@ -11,9 +11,12 @@ export function idbPromise(storeName, method, object) {
     let db, tx, store;
     request.onupgradeneeded = function(e) {
       const db = request.result;
-      db.createObjectStore('products', { keyPath: '_id' });
-      db.createObjectStore('categories', { keyPath: '_id' });
-      db.createObjectStore('cart', { keyPath: '_id' });
+      // db.createObjectStore('products', { keyPath: '_id' });
+      // db.createObjectStore('categories', { keyPath: '_id' });
+      // db.createObjectStore('cart', { keyPath: '_id' });
+      db.createObjectStore('products', { keyPath: 'item' });
+      db.createObjectStore('categories', { keyPath: 'item' });
+      db.createObjectStore('cart', { keyPath: 'item' });
     };
 
     request.onerror = function(e) {
@@ -41,7 +44,8 @@ export function idbPromise(storeName, method, object) {
           };
           break;
         case 'delete':
-          store.delete(object._id);
+          // store.delete(object._id);
+          store.delete(object.item);
           break;
         default:
           console.log('No valid method');

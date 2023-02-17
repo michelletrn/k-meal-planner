@@ -12,7 +12,7 @@ const CartItem = ({ item }) => {
       type: REMOVE_FROM_CART,
       item: item.item
     });
-    // idbPromise('cart', 'delete', { ...item });
+    idbPromise('cart', 'delete', { ...item });
 
   };
 
@@ -23,7 +23,7 @@ const CartItem = ({ item }) => {
         type: REMOVE_FROM_CART,
         item: item.item
       });
-      // idbPromise('cart', 'delete', { ...item });
+      idbPromise('cart', 'delete', { ...item });
 
     } else {
       dispatch({
@@ -31,7 +31,7 @@ const CartItem = ({ item }) => {
         item: item.item,
         purchaseQuantity: parseInt(value)
       });
-      // idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
+      idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
 
     }
   }
