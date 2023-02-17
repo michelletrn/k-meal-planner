@@ -45,3 +45,13 @@
 .searchbar-btn:hover {
     color: rgb(55, 54, 54);
 }
+
+
+@media screen and (width < 760px) {
+    .search-container {
+        flex-direction: column;
+    }
+    .search-small-screen {
+        margin: 1.5%
+    }
+}
