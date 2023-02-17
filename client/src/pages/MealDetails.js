@@ -57,9 +57,14 @@ const MealDetails = () => {
   useEffect(() => {
     getMealDetails(`lookup.php?i=${idMeal}`);
     // setShoppingList(checkedValues);
-    // checkChangeController();
-    return () => saveMealIds(savedMealIds);
+    // checkChangeController();    
   }, []);
+
+  useEffect(() => {
+    console.log("savedMealIds: ", savedMealIds);
+    saveMealIds(savedMealIds);
+  },[savedMealIds]);
+
 
   // useEffect(() => {
   //   console.log("Inside useEffect");
@@ -151,6 +156,8 @@ const MealDetails = () => {
 
       if (data) {
         setSavedMealIds([...savedMealIds, mealToSave.idMeal]);
+        // console.log("savedMealIds: ", savedMealIds);
+        // saveMealIds(savedMealIds);
       }
     } catch (err) {
       console.error(JSON.parse(JSON.stringify(err)));
