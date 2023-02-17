@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import { saveMealIds } from "../utils/localStorage";
 
 import './Login.css';
 import Auth from '../utils/auth';
@@ -30,6 +31,13 @@ const Login = (props) => {
       });
 
       Auth.login(data.login.token);
+
+      const idMeals = data.login.user.savedRecipes.map((recipe) => {
+        return recipe.idMeal;
+      });
+
+      saveMealIds(idMeals);
+
     } catch (e) {
       console.error(e);
     }

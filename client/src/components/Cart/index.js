@@ -24,25 +24,24 @@ const Cart = () => {
     }
   }, [data]);
 
-  // const emailHandler = () => {
+  
   const shoppingList = state.cart.map((item) => {
     return item.item;
   });
 
   const emailBody = shoppingList.join("%0D%0A");
+  
 
-  // }
+  useEffect(() => {
+    async function getCart() {
+      const cart = await idbPromise('cart', 'get');
+      dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
+    }
 
-  // useEffect(() => {
-  //   async function getCart() {
-  //     const cart = await idbPromise('cart', 'get');
-  //     dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart] });
-  //   }
-
-  //   if (!state.cart.length) {
-  //     getCart();
-  //   }
-  // }, [state.cart.length, dispatch]);
+    if (!state.cart.length) {
+      getCart();
+    }
+  }, [state.cart.length, dispatch]);
 
   function toggleCart() {
     dispatch({ type: TOGGLE_CART });
@@ -101,8 +100,7 @@ const Cart = () => {
               <Button onClick={submitCheckout}>Checkout</Button>
               {" "}
               <Button 
-                href={`mailto:?subject=My Shopping List&body=${emailBody}`}
-                // onClick={emailHandler}
+                href={`mailto:?subject=My Shopping List&body=${emailBody}`}                
                 >
                 Email
               </Button>

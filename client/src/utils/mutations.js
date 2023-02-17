@@ -7,6 +7,9 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        savedRecipes {          
+          idMeal
+        }
       }
     }
   }
