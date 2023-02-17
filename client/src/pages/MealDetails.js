@@ -57,7 +57,7 @@ const MealDetails = () => {
   useEffect(() => {
     getMealDetails(`lookup.php?i=${idMeal}`);
     // setShoppingList(checkedValues);
-    checkChangeController();
+    // checkChangeController();
     return () => saveMealIds(savedMealIds);
   }, []);
 
@@ -159,8 +159,8 @@ const MealDetails = () => {
 
   const addToCart = () => {
     console.log("!!!shoppingList: ", shoppingList);
-    const test = ["abc", "def", "ghi"];
-    const item = "abc";
+    // const test = ["abc", "def", "ghi"];
+    // const item = "abc";
 
     shoppingList.forEach((item) => {
       // test.forEach((item) => {
@@ -171,17 +171,17 @@ const MealDetails = () => {
           item,
           purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
         });
-        //   idbPromise('cart', 'put', {
-        //     ...itemInCart,
-        //     purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-        //   });
+        idbPromise('cart', 'put', {
+          ...itemInCart,
+          purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+        });
       } else {
         console.log("currentProduct: ", item);
         dispatch({
           type: ADD_TO_CART,
           product: { item: item, price: 0.99, purchaseQuantity: 1 },
         });
-        //   idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+        idbPromise('cart', 'put', { item: item, price: 0.99, purchaseQuantity: 1 });
       }
     });
 
@@ -194,9 +194,10 @@ const MealDetails = () => {
         type: REMOVE_FROM_CART,
         item: item,
       });
+      idbPromise('cart', 'delete', { item });
     });
 
-    // idbPromise('cart', 'delete', { ...currentProduct });
+
   };
 
   const checkChangeController = () => {
@@ -221,6 +222,27 @@ const MealDetails = () => {
   };
 
   // checkChangeController();
+  function selects() {
+    var ele = document.getElementsByName('ingredient');
+    console.log("ele: ", ele);
+    for (var i = 0; i < ele.length; i++) {
+      if (ele[i].type == 'checkbox')
+        ele[i].checked = true;
+    }
+    checkChangeController();
+  }
+
+  function deSelect() {
+    var ele = document.getElementsByName('ingredient');
+    console.log("ele: ", ele);
+    for (var i = 0; i < ele.length; i++) {
+      if (ele[i].type == 'checkbox')
+        ele[i].checked = false;
+
+    }
+    checkChangeController();
+  }
+
 
   return (
     <div>
@@ -279,6 +301,7 @@ const MealDetails = () => {
                               type="checkbox"
                               defaultChecked={false}
                               value={ingredient}
+                              name='ingredient'
                               onChange={checkChangeController}
                             />{" "}
                             {ingredient}: {meal.strMeasures[index]}
@@ -288,33 +311,12 @@ const MealDetails = () => {
                       return null;
                     })}
 
-                    {/* {products.map((product) => (
-                  <li key={product}>
-                    {product}
-                  </li>
-                ))}
-
-                {cart.map((item) => (
-                  <li key={item.item}>
-                    {item.item} x {item.purchaseQuantity}
-                  </li>
-                ))} */}
-
-                    {/* {Array.from({ length: 20 }, (_, i) => i + 1).map(
-                  (ingredientNum) => {
-                    const ingredient = meal[`strIngredient${ingredientNum}`];
-                    const measurement = meal[`strMeasure${ingredientNum}`];
-                    if (ingredient && measurement) {
-                      return (
-                        <li key={ingredientNum}>
-                          {ingredient}: {measurement}
-                        </li>
-                      );
-                    }
-                    return null;
-                  }
-                )} */}
                   </ol>
+                  <input type="button" onClick={selects} value="Select All" />
+                  {' '}
+                  <input type="button" onClick={deSelect} value="Deselect All" />
+
+
                 </div>
               </div>
             </div>
@@ -349,7 +351,7 @@ const MealDetails = () => {
                 >
                   Add to Cart
                 </button>
-                <button
+                {/* <button
                   className="remove-btn btn"
                   style={{ fontWeight: "600" }}
                   disabled={
@@ -358,7 +360,7 @@ const MealDetails = () => {
                   onClick={removeFromCart}
                 >
                   Remove from Cart
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
